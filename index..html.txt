@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETNext - Smart AI-Powered News</title>
+  <meta name="description" content="ETNext brings you AI-curated real-time news across India, business, tech, and world. Stay informed smarter.">
+  <link rel="icon" type="image/png" href="etnext-logo.png">
+  <meta property="og:image" content="etnext-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #e3f2fd;
+      transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    body.light {
+      background: linear-gradient(135deg, #e3f2fd, #ffffff);
+      color: #333;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(19, 35, 47, 0.8);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    body.light header {
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .logo-img {
+      height: 45px;
+      width: auto;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .logo-img:hover {
+      transform: scale(1.05);
+    }
+    nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+    nav button:hover, nav button.active {
+      background: rgba(79, 195, 247, 0.3);
+      color: #fff;
+    }
+    body.light nav button:hover, body.light nav button.active {
+      background: rgba(25, 118, 210, 0.1);
+      color: #1976d2;
+    }
+    .search-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1rem auto;
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+    }
+    .search-bar {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: none;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #e3f2fd;
+      font-size: 1rem;
+      backdrop-filter: blur(10px);
+    }
+    body.light .search-bar {
+      background: #ffffff;
+      color: #333;
+      border: 1px solid #90caf9;
+    }
+    .voice-btn {
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      background: #4fc3f7;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    .voice-btn:hover {
+      background: #29b6f6;
+    }
+    .suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(19, 35, 47, 0.95);
+      border-radius: 10px;
+      padding: 0.5rem;
+      display: none;
+      z-index: 10;
+    }
+    body.light .suggestions {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+    }
+    .suggestions div {
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .suggestions div:hover {
+      background: rgba(79, 195, 247, 0.2);
+    }
+    body.light .suggestions div:hover {
+      background: rgba(25, 118, 210, 0.1);
+    }
+    main {
+      flex: 1;
+      padding: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+    .news-card {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    body.light .news-card {
+      background: #ffffff;
+      color: #333;
+      border: 1px solid #e0e0e0;
+    }
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(79, 195, 247, 0.3);
+    }
+    .news-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .news-card .content {
+      padding: 1rem;
+    }
+    .news-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #4fc3f7;
+    }
+    body.light .news-card h3 {
+      color: #1976d2;
+    }
+    .news-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .news-card .date {
+      font-size: 0.8rem;
+      color: #90caf9;
+    }
+    body.light .news-card .date {
+      color: #666;
+    }
+    .read-more {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: #4fc3f7;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 20px;
+      transition: background 0.3s;
+    }
+    .read-more:hover {
+      background: #29b6f6;
+    }
+    .theme-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #4fc3f7;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    .theme-toggle:hover {
+      background: #29b6f6;
+    }
+    footer {
+      background: #0d1b2a;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #b0bec5;
+    }
+    body.light footer {
+      background: #e3f2fd;
+      color: #333;
+    }
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      nav {
+        justify-content: center;
+      }
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="etnext-logo.png" alt="ETNext Logo" class="logo-img">
+    </div>
+    <nav id="nav"></nav>
+  </header>
+
+  <div class="search-container">
+    <input type="text" class="search-bar" placeholder="Search anything... (e.g. AI, Elections, Space)" id="search-input" />
+    <button class="voice-btn" id="voice-btn">🎤</button>
+    <div class="suggestions" id="suggestions">
+      <div>AI</div>
+      <div>Space</div>
+      <div>Cricket</div>
+      <div>Finance</div>
+    </div>
+  </div>
+
+  <main>
+    <div id="content"></div>
+  </main>
+
+  <footer>
+    © 2025 ETNext | AI-Curated Smart News Platform | Created by Ankit Yadav
+  </footer>
+
+  <button class="theme-toggle" id="theme-toggle">🌙</button>
+
+  <script>
+    const categories = [
+      { name: '🌏 World', url: 'https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en' },
+      { name: '💼 Business', url: 'https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-IN&gl=IN&ceid=IN:en' },
+      { name: '⚙️ Technology', url: 'https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en' },
+      { name: '🎮 Entertainment', url: 'https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-IN&gl=IN&ceid=IN:en' },
+      { name: '🏏 Sports', url: 'https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-IN&gl=IN&ceid=IN:en' },
+      { name: '🧬 Science', url: 'https://news.google.com/rss/headlines/section/topic/SCIENCE?hl=en-IN&gl=IN&ceid=IN:en' },
+      { name: '💊 Health', url: 'https://news.google.com/rss/headlines/section/topic/HEALTH?hl=en-IN&gl=IN&ceid=IN:en' }
+    ];
+
+    const nav = document.getElementById('nav');
+    const content = document.getElementById('content');
+    const searchInput = document.getElementById('search-input');
+    const voiceBtn = document.getElementById('voice-btn');
+    const suggestions = document.getElementById('suggestions');
+    const themeToggle = document.getElementById('theme-toggle');
+
+    categories.forEach((cat, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = cat.name;
+      btn.addEventListener('click', () => loadCategory(i));
+      nav.appendChild(btn);
+    });
+    loadCategory(0);
+
+    async function loadCategory(index) {
+      nav.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      nav.children[index].classList.add('active');
+      content.innerHTML = `<div class="loading"><div class="spinner"></div><div>🧠 ETNext AI analyzing ${categories[index].name} news...</div></div>`;
+      try {
+        const rssUrl = categories[index].url;
+        const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+        const res = await fetch(api);
+        const data = await res.json();
+        displayNews(data.items.slice(0, 10));
+      } catch {
+        content.innerHTML = `<div class="loading">❌ Failed to load news.</div>`;
+      }
+    }
+
+    function summarize(text) {
+      if (!text) return "No summary available.";
+      const clean = text.replace(/(<([^>]+)>)/gi, "").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+      const sentences = clean.split(/[.!?]/).filter(s => s.trim().length > 30);
+      if (sentences.length === 0) return clean.slice(0, 200) + "...";
+      let summary = sentences.slice(0, 2).join(". ").trim();
+      if (summary.length < 100 && sentences[2]) summary += ". " + sentences[2];
+      return summary.slice(0, 280) + "...";
+    }
+
+    function displayNews(items) {
+      content.innerHTML = `<div class="ai-message">🤖 ETNext AI generated smart summaries for the latest news.</div><div class="news-grid"></div>`;
+      const grid = content.querySelector('.news-grid');
+      items.forEach(a => {
+        const summary = summarize(a.description);
+        const source = (a.link.match(/:\/\/(.[^/]+)/) || [])[1] || "Source";
+        const card = document.createElement('div');
+        card.className = 'news-card';
+        card.innerHTML = `
+          ${a.enclosure ? `<img src="${a.enclosure.link}" alt="News Image">` : ''}
+          <div class="content">
+            <h3>${a.title}</h3>
+            <p><b>🧠 ETNext AI Summary:</b> ${summary}</p>
+            <div class="date">${new Date(a.pubDate).toLocaleDateString()}</div>
+            <a href="${a.link}" class="read-more" target="_blank">Read Original on ${source} →</a>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener('input', () => suggestions.style.display = searchInput.value ? 'block' : 'none');
+    searchInput.addEventListener('keypress', e => e.key === 'Enter' && performSearch(searchInput.value));
+    suggestions.addEventListener('click', e => {
+      if (e.target.tagName === 'DIV') {
+        searchInput.value = e.target.textContent;
+        performSearch(e.target.textContent);
+        suggestions.style.display = 'none';
+      }
+    });
+
+    async function performSearch(q) {
+      if (!q) return;
+      content.innerHTML = `<div class="loading"><div class="spinner"></div><div>🔎 Searching "${q}"...</div></div>`;
+      try {
+        const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-IN&gl=IN&ceid=IN:en`;
+        const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+        const res = await fetch(api);
+        const data = await res.json();
+        displayNews(data.items.slice(0, 10));
+      } catch {
+        content.innerHTML = `<div class="loading">❌ Search failed.</div>`;
+      }
+    }
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      rec.lang = 'en-US';
+      voiceBtn.addEventListener('click', () => rec.start());
+      rec.onresult = e => {
+        const text = e.results[0][0].transcript;
+        searchInput.value = text;
+        performSearch(text);
+      };
+    } else voiceBtn.style.display = 'none';
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      themeToggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>
