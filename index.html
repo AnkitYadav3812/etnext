@@ -6,7 +6,7 @@
 <title>ETNext — Smart News & Weather</title>
 <link rel="icon" href="etnext-logo.png" type="image/png" />
 
-<!-- ✅ Share Preview -->
+<!-- ✅ Social Share Preview -->
 <meta property="og:title" content="ETNext — Smart News & Weather" />
 <meta property="og:description" content="AI-powered breaking news, live weather, and trending updates — all in one place." />
 <meta property="og:image" content="https://ankityadav3812.github.io/etnext/etnext-logo.png" />
@@ -17,6 +17,7 @@
 <meta name="twitter:description" content="AI-powered breaking news and weather updates." />
 <meta name="twitter:image" content="https://ankityadav3812.github.io/etnext/etnext-logo.png" />
 <meta name="theme-color" content="#d32f2f" />
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
 <style>
@@ -103,10 +104,10 @@ nav button:hover, nav button.active {
 }
 .ticker-content {
   display: inline-block;
-  animation: scroll 90s linear infinite; /* 🐢 Slower speed */
+  animation: scroll 90s linear infinite;
 }
 .ticker:hover .ticker-content {
-  animation-play-state: paused; /* ⏸️ Pause on hover */
+  animation-play-state: paused;
 }
 @keyframes scroll {
   from { transform: translateX(100%); }
@@ -251,6 +252,7 @@ footer {
 </div>
 
 <script>
+// ---------- CONFIG ----------
 const categories = [
   { name: "🌍 World", url: "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en" },
   { name: "💼 Business", url: "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-IN&gl=IN&ceid=IN:en" },
@@ -259,6 +261,7 @@ const categories = [
   { name: "🎬 Entertainment", url: "https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-IN&gl=IN&ceid=IN:en" }
 ];
 
+// ---------- ELEMENTS ----------
 const nav = document.getElementById("nav");
 const content = document.getElementById("content");
 const ticker = document.getElementById("ticker-content");
@@ -267,6 +270,7 @@ const popupTitle = document.getElementById("breakingTitle");
 const popupText = document.getElementById("breakingText");
 const popupClose = document.getElementById("breakingClose");
 
+// ---------- CATEGORY BUTTONS ----------
 categories.forEach(cat => {
   const b = document.createElement("button");
   b.textContent = cat.name;
@@ -274,13 +278,27 @@ categories.forEach(cat => {
   nav.appendChild(b);
 });
 
+// ---------- FETCH RSS ----------
 async function fetchRSS(url) {
-  const res = await fetch("https://thingproxy.freeboard.io/fetch/" + url);
-  const data = await res.text();
-  const xml = new DOMParser().parseFromString(data, "text/xml");
-  return Array.from(xml.querySelectorAll("item"));
+  const proxies = [
+    "https://api.allorigins.win/get?url=",
+    "https://api.codetabs.com/v1/proxy?quest=",
+    "https://api.rss2json.com/v1/api.json?rss_url="
+  ];
+  for (let proxy of proxies) {
+    try {
+      const res = await fetch(proxy + encodeURIComponent(url));
+      const text = await res.text();
+      const data = text.includes("contents") ? JSON.parse(text).contents : text;
+      const xml = new DOMParser().parseFromString(data, "text/xml");
+      const items = Array.from(xml.querySelectorAll("item"));
+      if (items.length) return items;
+    } catch (e) { console.warn("Proxy failed:", proxy); }
+  }
+  throw new Error("All proxies failed");
 }
 
+// ---------- DISPLAY NEWS ----------
 async function loadNews(url) {
   content.innerHTML = "⏳ Loading...";
   try {
@@ -291,34 +309,99 @@ async function loadNews(url) {
       const title = item.querySelector("title")?.textContent;
       const link = item.querySelector("link")?.textContent;
       const desc = item.querySelector("description")?.textContent || "";
-
-      // 🖼 Improved image extraction
-      let img = "";
       const media = item.getElementsByTagName("media:content")[0];
-      const enclosure = item.getElementsByTagName("enclosure")[0];
       const thumb = item.getElementsByTagName("media:thumbnail")[0];
+      const enclosure = item.getElementsByTagName("enclosure")[0];
       const imgMatch = desc.match(/<img[^>]+src="([^">]+)"/);
-      if (media && media.getAttribute("url")) img = media.getAttribute("url");
-      else if (enclosure && enclosure.getAttribute("url")) img = enclosure.getAttribute("url");
-      else if (thumb && thumb.getAttribute("url")) img = thumb.getAttribute("url");
-      else if (imgMatch) img = imgMatch[1];
-      else img = "https://via.placeholder.com/400x200?text=ETNext+News";
-
+      let img = media?.getAttribute("url") || thumb?.getAttribute("url") || enclosure?.getAttribute("url") || (imgMatch ? imgMatch[1] : "https://via.placeholder.com/400x200?text=ETNext+News");
       const text = desc.replace(/<[^>]*>?/gm, '').slice(0,150);
       const card = document.createElement("div");
       card.className = "news-card";
-      card.innerHTML = `<img src="${img}" alt="News Image" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'">
-      <div class="content"><h3>${title}</h3><p>${text}</p><a href="${link}" target="_blank" class="read-more">Read More</a></div>`;
+      card.innerHTML = `
+        <img src="${img}" alt="News Image" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'">
+        <div class="content"><h3>${title}</h3><p>${text}</p><a href="${link}" target="_blank" class="read-more">Read More</a></div>`;
       grid.appendChild(card);
     });
     content.innerHTML = "";
     content.appendChild(grid);
-  } catch {
-    content.innerHTML = "⚠️ Error loading news.";
-  }
+  } catch { content.innerHTML = "⚠️ Error loading news."; }
 }
 
-// Weather, popup, and other features remain same (already working)
+// ---------- BREAKING POPUP + TICKER ----------
+let lastHeadline = "";
+async function updateTicker() {
+  try {
+    const items = await fetchRSS(categories[0].url);
+    const titles = items.slice(0, 10).map(i => i.querySelector("title")?.textContent);
+    ticker.textContent = "🔴 " + titles.join(" • ");
+    const top = titles[0];
+    if (top && top !== lastHeadline) {
+      showBreakingPopup(top);
+      lastHeadline = top;
+    }
+  } catch { ticker.textContent = "⚠️ Failed to load headlines."; }
+}
+
+function showBreakingPopup(headline) {
+  popupTitle.textContent = "Breaking Now";
+  popupText.textContent = headline;
+  popup.classList.add("show");
+  setTimeout(() => popup.classList.remove("show"), 10000);
+
+  if ("Notification" in window && Notification.permission === "granted") {
+    new Notification("ETNext — Breaking", {
+      body: headline,
+      icon: "https://ankityadav3812.github.io/etnext/etnext-logo.png"
+    });
+  }
+}
+popupClose.onclick = () => popup.classList.remove("show");
+
+// ---------- WEATHER ----------
+const weather = document.getElementById("weather-widget");
+async function getWeather(lat, lon) {
+  try {
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+    const d = await res.json();
+    weather.innerHTML = `<h4>Local Weather</h4><div>${d.current_weather.temperature}°C | Code ${d.current_weather.weathercode}</div>`;
+  } catch { weather.innerHTML = "☁️ Weather unavailable"; }
+}
+if (navigator.geolocation)
+  navigator.geolocation.getCurrentPosition(p => getWeather(p.coords.latitude,p.coords.longitude), () => getWeather(28.61,77.23));
+else getWeather(28.61,77.23);
+
+// ---------- THEME ----------
+document.getElementById("theme-toggle").onclick = () => {
+  document.body.classList.toggle("dark");
+  document.getElementById("theme-toggle").textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+};
+
+// ---------- SEARCH ----------
+document.getElementById("search-input").addEventListener("keypress", e => {
+  if (e.key === "Enter") {
+    const q = e.target.value.trim();
+    if (!q) return;
+    loadNews(`https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-IN&gl=IN&ceid=IN:en`);
+  }
+});
+
+// ---------- VOICE ----------
+if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+  const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const rec = new Rec();
+  rec.lang = "en-IN";
+  document.getElementById("voice-btn").onclick = () => rec.start();
+  rec.onresult = e => {
+    const q = e.results[0][0].transcript;
+    document.getElementById("search-input").value = q;
+    loadNews(`https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-IN&gl=IN&ceid=IN:en`);
+  };
+}
+
+// ---------- INIT ----------
+updateTicker();
+setInterval(updateTicker, 10 * 60 * 1000);
+loadNews(categories[0].url);
 </script>
 </body>
 </html>
