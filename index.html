@@ -1,236 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ETNext — Smart News & Weather</title>
-<link rel="icon" href="etnext-logo.png" type="image/png" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+<link rel="icon" href="etnext-logo.png" type="image/png">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <style>
 :root {
-  --background: #ffffff;
-  --foreground: #111111;
-  --primary: #d32f2f;
-  --accent: #f6f6f8;
-  --radius: 0.625rem;
+  --background:#ffffff;--foreground:#111;--primary:#d32f2f;--accent:#f6f6f8;--radius:.625rem;
 }
 .dark {
-  --background: #111111;
-  --foreground: #ffffff;
-  --primary: #ef5350;
-  --accent: #1e1e1e;
+  --background:#111;--foreground:#fff;--primary:#ef5350;--accent:#1e1e1e;
 }
-body {
-  margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "Poppins", sans-serif;
-  transition: all 0.3s ease;
-}
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: var(--primary);
-  color: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-header img {
-  height: 45px;
-  border-radius: 6px;
-}
-nav {
-  display: flex;
-  gap: 0.75rem;
-}
-nav button {
-  background: rgba(255,255,255,0.1);
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-nav button:hover, nav button.active {
-  background: #fff;
-  color: var(--primary);
-}
-.search-container {
-  max-width: 600px;
-  margin: 1.5rem auto;
-  display: flex;
-  gap: 0.5rem;
-}
-.search-bar {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  font-size: 1rem;
-}
-.voice-btn {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: none;
-  background: var(--primary);
-  color: #fff;
-  font-size: 1.3rem;
-  cursor: pointer;
-}
-.ticker {
-  background: var(--accent);
-  color: var(--foreground);
-  padding: 0.7rem 1rem;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.ticker-content {
-  display: inline-block;
-  animation: scroll 35s linear infinite;
-}
-@keyframes scroll {
-  from { transform: translateX(100%); }
-  to { transform: translateX(-100%); }
-}
-main {
-  max-width: 1200px;
-  margin: 1.5rem auto;
-  padding: 0 1rem;
-}
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-.news-card {
-  background: var(--accent);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: 0.3s;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.news-card:hover {
-  transform: translateY(-3px);
-}
-.news-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-.news-card .content {
-  padding: 1rem;
-}
-.news-card h3 {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
-}
-.news-card p {
-  font-size: 0.9rem;
-  color: #666;
-}
-.read-more {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 0.4rem 0.9rem;
-  background: var(--primary);
-  color: #fff;
-  text-decoration: none;
-  border-radius: 20px;
-  font-size: 0.8rem;
-}
-.theme-toggle {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.4rem;
-  cursor: pointer;
-}
-#weather-widget {
-  position: fixed;
-  bottom: 85px;
-  right: 1.5rem;
-  background: var(--accent);
-  color: var(--foreground);
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  text-align: center;
-  min-width: 170px;
-  z-index: 50;
-}
-#weather-widget img {
-  width: 40px;
-}
-footer {
-  background: #111;
-  color: #ddd;
-  padding: 3rem 2rem;
-  margin-top: 2rem;
-}
-.footer-container {
-  max-width: 1300px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-}
-.footer-brand h3 {
-  color: #fff;
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-.footer-brand p {
-  color: #aaa;
-  margin-bottom: 1rem;
-}
-.social-icons a {
-  margin-right: 10px;
-  color: #aaa;
-  font-size: 1.3rem;
-  transition: color 0.3s;
-}
-.social-icons a:hover { color: #ef5350; }
-.footer-links h4 { color: #fff; margin-bottom: 1rem; }
-.footer-links a {
-  color: #aaa;
-  text-decoration: none;
-  font-size: 0.95rem;
-  transition: color 0.3s;
-}
-.footer-links a:hover { color: #fff; }
-.footer-bottom {
-  border-top: 1px solid #333;
-  margin-top: 2rem;
-  text-align: center;
-  padding-top: 1rem;
-  color: #666;
-  font-size: 0.9rem;
-}
+body{margin:0;background:var(--background);color:var(--foreground);font-family:"Poppins",sans-serif;transition:.3s;}
+header{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:var(--primary);color:#fff;position:sticky;top:0;z-index:10;}
+header img{height:45px;border-radius:6px;}
+nav{display:flex;gap:.75rem;}
+nav button{background:rgba(255,255,255,.1);border:none;padding:.5rem 1rem;border-radius:25px;color:#fff;cursor:pointer;transition:.3s;}
+nav button:hover,nav button.active{background:#fff;color:var(--primary);}
+.search-container{max-width:600px;margin:1.5rem auto;display:flex;gap:.5rem;}
+.search-bar{flex:1;padding:.75rem 1rem;border:1px solid #ccc;border-radius:25px;font-size:1rem;}
+.voice-btn{width:45px;height:45px;border-radius:50%;border:none;background:var(--primary);color:#fff;font-size:1.3rem;cursor:pointer;}
+.ticker{background:var(--accent);color:var(--foreground);padding:.7rem 1rem;overflow:hidden;white-space:nowrap;}
+.ticker-content{display:inline-block;animation:scroll 35s linear infinite;}
+@keyframes scroll{from{transform:translateX(100%);}to{transform:translateX(-100%);}}
+main{max-width:1200px;margin:1.5rem auto;padding:0 1rem;}
+.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.news-card{background:var(--accent);border-radius:var(--radius);overflow:hidden;transition:.3s;box-shadow:0 2px 6px rgba(0,0,0,.1);}
+.news-card:hover{transform:translateY(-3px);}
+.news-card img{width:100%;height:200px;object-fit:cover;}
+.news-card .content{padding:1rem;}
+.news-card h3{margin:.5rem 0;font-size:1.1rem;}
+.news-card p{font-size:.9rem;color:#666;}
+.read-more{display:inline-block;margin-top:.5rem;padding:.4rem .9rem;background:var(--primary);color:#fff;text-decoration:none;border-radius:20px;font-size:.8rem;}
+.theme-toggle{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--primary);color:#fff;border:none;border-radius:50%;width:50px;height:50px;font-size:1.4rem;cursor:pointer;}
+#weather-widget{position:fixed;bottom:85px;right:1.5rem;background:var(--accent);color:var(--foreground);padding:1rem;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);text-align:center;min-width:170px;z-index:50;}
+#weather-widget img{width:40px;}
+footer{background:#111;color:#ddd;padding:3rem 2rem;margin-top:2rem;}
+.footer-container{max-width:1300px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;}
+.footer-brand h3{color:#fff;font-size:1.5rem;margin-bottom:.5rem;}
+.footer-brand p{color:#aaa;margin-bottom:1rem;}
+.social-icons a{margin-right:10px;color:#aaa;font-size:1.3rem;transition:.3s;}
+.social-icons a:hover{color:#ef5350;}
+.footer-links h4{color:#fff;margin-bottom:1rem;}
+.footer-links a{color:#aaa;text-decoration:none;font-size:.95rem;transition:.3s;}
+.footer-links a:hover{color:#fff;}
+.footer-bottom{border-top:1px solid #333;margin-top:2rem;text-align:center;padding-top:1rem;color:#666;font-size:.9rem;}
 </style>
 </head>
 <body>
 <header>
-  <img src="etnext-logo.png" alt="ETNext Logo" />
+  <img src="etnext-logo.png" alt="ETNext Logo">
   <nav id="nav"></nav>
 </header>
+
 <div class="search-container">
-  <input type="text" id="search-input" class="search-bar" placeholder="Search news... (e.g. AI, Cricket, Elections)" />
+  <input type="text" id="search-input" class="search-bar" placeholder="Search news... (e.g. AI, Cricket, Elections)">
   <button id="voice-btn" class="voice-btn">🎤</button>
 </div>
-<div class="ticker">
-  <div class="ticker-content" id="ticker-content">Breaking News: Fetching latest headlines...</div>
-</div>
+
+<div class="ticker"><div class="ticker-content" id="ticker-content">Breaking News: Fetching latest headlines...</div></div>
 <main><div id="content"></div></main>
 
 <footer>
@@ -266,94 +96,83 @@ footer {
 <div id="weather-widget">🌤 Loading weather...</div>
 
 <script>
-const categories = [
-  { name: "🌏 World", url: "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en" },
-  { name: "💼 Business", url: "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-IN&gl=IN&ceid=IN:en" },
-  { name: "⚙️ Technology", url: "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en" },
-  { name: "🏏 Sports", url: "https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-IN&gl=IN&ceid=IN:en" },
-  { name: "🎬 Entertainment", url: "https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-IN&gl=IN&ceid=IN:en" }
+const categories=[
+ {name:"🌏 World",url:"https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en"},
+ {name:"💼 Business",url:"https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-IN&gl=IN&ceid=IN:en"},
+ {name:"⚙️ Technology",url:"https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en"},
+ {name:"🏏 Sports",url:"https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-IN&gl=IN&ceid=IN:en"},
+ {name:"🎬 Entertainment",url:"https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-IN&gl=IN&ceid=IN:en"}
 ];
-const nav = document.getElementById("nav");
-const content = document.getElementById("content");
-
-categories.forEach((c, i) => {
-  const b = document.createElement("button");
-  b.textContent = c.name;
-  b.onclick = () => loadCategory(i);
-  nav.appendChild(b);
-});
+const nav=document.getElementById("nav"),content=document.getElementById("content");
+categories.forEach((c,i)=>{const b=document.createElement("button");b.textContent=c.name;b.onclick=()=>loadCategory(i);nav.appendChild(b);});
 loadCategory(0);
 
-async function loadCategory(i) {
-  nav.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-  nav.children[i].classList.add("active");
-  content.innerHTML = `<div style='text-align:center;'>🤖 Loading ${categories[i].name}...</div>`;
-  const api = `https://api.allorigins.win/get?url=${encodeURIComponent(categories[i].url)}`;
-  try {
-    const response = await fetch(api);
-    const raw = await response.json();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(raw.contents, "text/xml");
-    const items = Array.from(doc.querySelectorAll("item")).slice(0, 10);
-    displayNews(items.map(parseRSSItem), categories[i].name);
-  } catch {
-    content.innerHTML = "⚠️ Error loading news.";
-  }
+async function loadCategory(i){
+ nav.querySelectorAll("button").forEach(b=>b.classList.remove("active"));
+ nav.children[i].classList.add("active");
+ content.innerHTML=`<div style='text-align:center;'>🤖 Loading ${categories[i].name}...</div>`;
+ try{
+   const proxy="https://cors.isomorphic-git.org/";
+   const rssUrl=categories[i].url;
+   const res=await fetch(proxy+encodeURIComponent(rssUrl));
+   const text=await res.text();
+   const parser=new DOMParser();const doc=parser.parseFromString(text,"text/xml");
+   const items=Array.from(doc.querySelectorAll("item")).slice(0,8);
+   const news=items.map(it=>({
+     title:it.querySelector("title")?.textContent||"No title",
+     link:it.querySelector("link")?.textContent||"#",
+     desc:it.querySelector("description")?.textContent||"",
+     img:(it.querySelector("media\\:content, enclosure")?.getAttribute("url"))||
+         (it.querySelector("description")?.innerHTML?.match(/<img[^>]+src=\"([^\"]+)\"/)?.[1])||
+         "https://via.placeholder.com/400x200?text=ETNext+News"
+   }));
+   displayNews(news,categories[i].name);
+ }catch(e){
+   console.error(e);
+   content.innerHTML=`<div style='color:red;text-align:center;'>⚠️ Error loading news. Try refreshing.</div>`;
+ }
 }
 
-function parseRSSItem(item) {
-  const title = item.querySelector("title")?.textContent || "No title";
-  const link = item.querySelector("link")?.textContent || "#";
-  const description = item.querySelector("description")?.textContent || "";
-  let img = "";
-  const match = description.match(/<img[^>]+src=["']([^"'>]+)["']/);
-  if (match) img = match[1];
-  return { title, link, description, img };
+function displayNews(list,title){
+ content.innerHTML=`<h2 style='text-align:center;'>${title}</h2><div class='news-grid'></div>`;
+ const grid=content.querySelector(".news-grid");
+ list.forEach(n=>{
+   const card=document.createElement("div");
+   card.className="news-card";
+   card.innerHTML=`
+   <img src="${n.img}" onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'" alt="">
+   <div class="content"><h3>${n.title}</h3>
+   <p>${n.desc.replace(/<[^>]*>?/gm,'').slice(0,150)||"No description available."}</p>
+   <a href="${n.link}" target="_blank" class="read-more">Read More</a></div>`;
+   grid.appendChild(card);
+ });
 }
 
-function displayNews(articles, title) {
-  content.innerHTML = `<h2 style='text-align:center;'>${title}</h2><div class='news-grid'></div>`;
-  const grid = content.querySelector(".news-grid");
-  articles.forEach(a => {
-    const img = a.img || "https://via.placeholder.com/400x200?text=ETNext+News";
-    const card = document.createElement("div");
-    card.className = "news-card";
-    card.innerHTML = `
-      <img src="${img}" alt="News Image" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'">
-      <div class="content">
-        <h3>${a.title}</h3>
-        <p>${a.description.replace(/<[^>]*>?/gm, '').slice(0,150) || "No description available."}</p>
-        <a href="${a.link}" target="_blank" class="read-more">Read More</a>
-      </div>`;
-    grid.appendChild(card);
-  });
+// weather
+const weather=document.getElementById("weather-widget");
+async function getWeather(city){
+ try{
+   const r=await fetch(`https://api.weatherapi.com/v1/current.json?key=6b36b4ff0a7549ce8b412374424110&q=${encodeURIComponent(city)}`);
+   const d=await r.json();
+   weather.innerHTML=`<h4>${d.location.name}</h4><img src="${d.current.condition.icon}"><div>${d.current.temp_c}°C | ${d.current.condition.text}</div>`;
+ }catch{weather.innerHTML="☁️ Weather unavailable";}
 }
+if(navigator.geolocation){
+ navigator.geolocation.getCurrentPosition(async p=>{
+   const {latitude,longitude}=p.coords;
+   const g=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+   const l=await g.json();getWeather(l.city||l.locality||"Delhi");
+ },()=>getWeather("Delhi"));
+}else getWeather("Delhi");
 
-const weather = document.getElementById("weather-widget");
-async function getWeather(city) {
-  try {
-    const res = await fetch(`https://api.weatherapi.com/v1/current.json?key=6b36b4ff0a7549ce8b412374424110&q=${encodeURIComponent(city)}`);
-    const d = await res.json();
-    weather.innerHTML = `<h4>${d.location.name}</h4><img src="${d.current.condition.icon}" alt=""><div>${d.current.temp_c}°C | ${d.current.condition.text}</div>`;
-  } catch {
-    weather.innerHTML = "☁️ Weather unavailable";
-  }
-}
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(async pos => {
-    const { latitude, longitude } = pos.coords;
-    const geo = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
-    const loc = await geo.json();
-    const city = loc.city || loc.locality || "Delhi";
-    getWeather(city);
-  }, () => getWeather("Delhi"));
-} else getWeather("Delhi");
+// dark/light
+document.getElementById("theme-toggle").onclick=()=>{
+ document.body.classList.toggle("dark");
+ document.getElementById("theme-toggle").textContent=document.body.classList.contains("dark")?"☀️":"🌙";
+};
 
-document.getElementById("theme-toggle").addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  document.getElementById("theme-toggle").textContent =
-    document.body.classList.contains("dark") ? "☀️" : "🌙";
-});
+// auto refresh every 15 min
+setInterval(()=>loadCategory(0),15*60*1000);
 </script>
 </body>
 </html>
