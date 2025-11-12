@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ETNext — Smart News & Weather</title>
 <link rel="icon" href="etnext-logo.png" type="image/png" />
 
-<!-- ✅ Social Share & SEO Meta Tags -->
+<!-- ✅ Social Share Preview -->
 <meta property="og:title" content="ETNext — Smart News & Weather" />
 <meta property="og:description" content="Stay ahead with AI-powered breaking news, live weather, and trending updates — all in one place on ETNext." />
 <meta property="og:image" content="https://ankityadav3812.github.io/etnext/etnext-logo.png" />
@@ -21,36 +21,22 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 <style>
-:root {
-  --background: #ffffff;
-  --foreground: #111111;
-  --primary: #d32f2f;
-  --accent: #f6f6f8;
-  --radius: 0.625rem;
-}
-.dark {
-  --background: #111111;
-  --foreground: #ffffff;
-  --primary: #ef5350;
-  --accent: #1e1e1e;
-}
 body {
   margin: 0;
-  background: var(--background);
-  color: var(--foreground);
+  background: #fff;
+  color: #111;
   font-family: "Poppins", sans-serif;
-  transition: all 0.3s ease;
+  transition: 0.3s ease;
 }
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: var(--primary);
+  background: #d32f2f;
   color: #fff;
   position: sticky;
   top: 0;
-  z-index: 10;
 }
 header img { height: 45px; border-radius: 6px; }
 nav { display: flex; gap: 0.75rem; }
@@ -61,180 +47,114 @@ nav button {
   border-radius: 25px;
   color: #fff;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: 0.3s;
 }
-nav button:hover, nav button.active { background: #fff; color: var(--primary); }
+nav button:hover, nav button.active { background: #fff; color: #d32f2f; }
 .search-container {
   max-width: 600px; margin: 1.5rem auto; display: flex; gap: 0.5rem;
 }
 .search-bar {
-  flex: 1; padding: 0.75rem 1rem; border: 1px solid #ccc; border-radius: 25px; font-size: 1rem;
+  flex: 1; padding: 0.75rem 1rem; border: 1px solid #ccc; border-radius: 25px;
 }
 .voice-btn {
   width: 45px; height: 45px; border-radius: 50%; border: none;
-  background: var(--primary); color: #fff; font-size: 1.3rem; cursor: pointer;
+  background: #d32f2f; color: #fff; font-size: 1.3rem; cursor: pointer;
 }
-.ticker {
-  background: var(--accent); color: var(--foreground);
-  padding: 0.7rem 1rem; overflow: hidden; white-space: nowrap;
-}
-.ticker-content { display: inline-block; animation: scroll 35s linear infinite; }
-@keyframes scroll { from { transform: translateX(100%);} to { transform: translateX(-100%);} }
 main { max-width: 1200px; margin: 1.5rem auto; padding: 0 1rem; }
-.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+.news-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;
+}
 .news-card {
-  background: var(--accent); border-radius: var(--radius); overflow: hidden;
+  background: #f6f6f8; border-radius: 10px; overflow: hidden;
   transition: 0.3s; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 .news-card:hover { transform: translateY(-3px); }
 .news-card img { width: 100%; height: 200px; object-fit: cover; }
 .news-card .content { padding: 1rem; }
-.news-card h3 { margin: 0.5rem 0; font-size: 1.1rem; }
-.news-card p { font-size: 0.9rem; color: #666; }
+.news-card h3 { font-size: 1.1rem; margin: 0.5rem 0; }
 .read-more {
-  display: inline-block; margin-top: 0.5rem; padding: 0.4rem 0.9rem;
-  background: var(--primary); color: #fff; text-decoration: none; border-radius: 20px; font-size: 0.8rem;
+  display: inline-block; padding: 0.4rem 0.9rem; background: #d32f2f; color: #fff;
+  text-decoration: none; border-radius: 20px; font-size: 0.8rem;
 }
+footer { background: #111; color: #ddd; text-align: center; padding: 1.5rem; margin-top: 2rem; }
 .theme-toggle {
-  position: fixed; bottom: 1.5rem; right: 1.5rem;
-  background: var(--primary); color: #fff; border: none; border-radius: 50%;
-  width: 50px; height: 50px; font-size: 1.4rem; cursor: pointer;
+  position: fixed; bottom: 1.5rem; right: 1.5rem; background: #d32f2f;
+  color: #fff; border: none; border-radius: 50%; width: 50px; height: 50px;
+  font-size: 1.4rem; cursor: pointer;
 }
 #weather-widget {
-  position: fixed; bottom: 85px; right: 1.5rem;
-  background: var(--accent); color: var(--foreground); padding: 1rem;
-  border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  position: fixed; bottom: 85px; right: 1.5rem; background: #f6f6f8; color: #111;
+  padding: 1rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   text-align: center; min-width: 170px; z-index: 50;
-}
-#weather-widget img { width: 40px; }
-
-/* --- Footer --- */
-footer { background: #111; color: #ddd; padding: 3rem 2rem; margin-top: 2rem; }
-.footer-container {
-  max-width: 1300px; margin: auto;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;
-}
-.footer-brand h3 { color: #fff; font-size: 1.5rem; margin-bottom: 0.5rem; }
-.footer-brand p { color: #aaa; margin-bottom: 1rem; }
-.social-icons a { margin-right: 10px; color: #aaa; font-size: 1.3rem; transition: color 0.3s; }
-.social-icons a:hover { color: #ef5350; }
-.footer-links h4 { color: #fff; margin-bottom: 1rem; }
-.footer-links a { color: #aaa; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
-.footer-links a:hover { color: #fff; }
-.footer-bottom {
-  border-top: 1px solid #333; margin-top: 2rem; text-align: center;
-  padding-top: 1rem; color: #666; font-size: 0.9rem;
 }
 </style>
 </head>
+
 <body>
 <header>
   <img src="etnext-logo.png" alt="ETNext Logo" />
   <nav id="nav"></nav>
 </header>
+
 <div class="search-container">
-  <input type="text" id="search-input" class="search-bar" placeholder="Search news... (e.g. AI, Cricket, Elections)" />
+  <input id="search-input" class="search-bar" placeholder="Search news... (e.g. AI, Elections, Sports)" />
   <button id="voice-btn" class="voice-btn">🎤</button>
 </div>
-<div class="ticker">
-  <div class="ticker-content" id="ticker-content">Breaking News: Fetching latest headlines...</div>
-</div>
-<main><div id="content"></div></main>
 
-<footer>
-  <div class="footer-container">
-    <div class="footer-brand">
-      <h3>ETNext</h3>
-      <p>Your trusted source for breaking news, insights, and expert commentary worldwide.</p>
-      <div class="social-icons">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-      </div>
-    </div>
-    <div class="footer-links">
-      <h4>News</h4>
-      <a href="#">AI</a><br><a href="#">Technology</a><br><a href="#">Business</a><br><a href="#">Sports</a>
-    </div>
-    <div class="footer-links">
-      <h4>Company</h4>
-      <a href="#">About Us</a><br><a href="#">Careers</a><br><a href="#">Advertise</a>
-    </div>
-    <div class="footer-links">
-      <h4>Resources</h4>
-      <a href="#">Help Center</a><br><a href="#">Terms</a><br><a href="#">Privacy Policy</a>
-    </div>
-  </div>
-  <div class="footer-bottom">© 2025 ETNext. All Rights Reserved.</div>
-</footer>
+<main><div id="content">🤖 Loading News...</div></main>
 
+<footer>© 2025 ETNext — Smart News & Weather</footer>
 <button class="theme-toggle" id="theme-toggle">🌙</button>
 <div id="weather-widget">🌤 Loading weather...</div>
 
 <script>
 const categories = [
-  { name: "🌏 World", url: "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en" },
+  { name: "🌍 World", url: "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en" },
   { name: "💼 Business", url: "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-IN&gl=IN&ceid=IN:en" },
-  { name: "⚙️ Technology", url: "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en" },
+  { name: "⚙️ Tech", url: "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en" },
   { name: "🏏 Sports", url: "https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-IN&gl=IN&ceid=IN:en" },
   { name: "🎬 Entertainment", url: "https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-IN&gl=IN&ceid=IN:en" }
 ];
-
 const nav = document.getElementById("nav");
-const content = document.getElementById("content");
-
-categories.forEach((c, i) => {
-  const b = document.createElement("button");
-  b.textContent = c.name;
-  b.onclick = () => loadCategory(i);
-  nav.appendChild(b);
+categories.forEach((cat, i) => {
+  const btn = document.createElement("button");
+  btn.textContent = cat.name;
+  btn.onclick = () => loadNews(cat.url);
+  nav.appendChild(btn);
 });
-loadCategory(0);
+loadNews(categories[0].url);
 
-async function loadCategory(i) {
-  nav.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-  nav.children[i].classList.add("active");
-  content.innerHTML = `<div style='text-align:center;'>🤖 Loading ${categories[i].name}...</div>`;
-  const proxy = "https://cors.isomorphic-git.org/";
-  const rssUrl = categories[i].url;
+async function loadNews(url) {
+  document.getElementById("content").innerHTML = "<div style='text-align:center;'>Loading news...</div>";
   try {
-    const res = await fetch(proxy + encodeURIComponent(rssUrl));
-    const text = await res.text();
+    const proxy = "https://api.codetabs.com/v1/proxy?quest=";
+    const response = await fetch(proxy + encodeURIComponent(url));
+    const text = await response.text();
     const parser = new DOMParser();
     const xml = parser.parseFromString(text, "text/xml");
-    const items = Array.from(xml.querySelectorAll("item")).slice(0, 8);
-    displayNews(items, categories[i].name);
+    const items = Array.from(xml.querySelectorAll("item")).slice(0, 10);
+    const grid = document.createElement("div");
+    grid.className = "news-grid";
+    items.forEach(item => {
+      const title = item.querySelector("title").textContent;
+      const link = item.querySelector("link").textContent;
+      const desc = item.querySelector("description").textContent;
+      const imgMatch = desc.match(/<img[^>]+src="([^">]+)"/);
+      const img = imgMatch ? imgMatch[1] : "https://via.placeholder.com/400x200?text=ETNext+News";
+      const clean = desc.replace(/<[^>]*>?/gm, "").slice(0, 150);
+      const card = document.createElement("div");
+      card.className = "news-card";
+      card.innerHTML = `<img src="${img}" alt=""><div class="content"><h3>${title}</h3><p>${clean}</p><a href="${link}" target="_blank" class="read-more">Read More</a></div>`;
+      grid.appendChild(card);
+    });
+    document.getElementById("content").innerHTML = "";
+    document.getElementById("content").appendChild(grid);
   } catch (err) {
-    content.innerHTML = "⚠️ Error loading news.";
+    document.getElementById("content").innerHTML = "⚠️ Error loading news.";
   }
 }
 
-function displayNews(items, title) {
-  content.innerHTML = `<h2 style='text-align:center;'>${title}</h2><div class='news-grid'></div>`;
-  const grid = content.querySelector(".news-grid");
-  items.forEach(item => {
-    const title = item.querySelector("title").textContent;
-    const link = item.querySelector("link").textContent;
-    const desc = item.querySelector("description").textContent;
-    const imgMatch = desc.match(/<img[^>]+src="([^">]+)"/);
-    const img = imgMatch ? imgMatch[1] : "https://via.placeholder.com/400x200?text=ETNext+News";
-    const cleanDesc = desc.replace(/<[^>]*>?/gm, '').slice(0, 150);
-    const card = document.createElement("div");
-    card.className = "news-card";
-    card.innerHTML = `
-      <img src="${img}" alt="News Image" loading="lazy">
-      <div class="content">
-        <h3>${title}</h3>
-        <p>${cleanDesc}</p>
-        <a href="${link}" target="_blank" class="read-more">Read More</a>
-      </div>`;
-    grid.appendChild(card);
-  });
-}
-
-// 🌦 Weather
+// 🌤 Weather
 const weather = document.getElementById("weather-widget");
 async function getWeather(city) {
   try {
@@ -247,14 +167,13 @@ async function getWeather(city) {
 }
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(async pos => {
-    const { latitude, longitude } = pos.coords;
-    const geo = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+    const geo = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&localityLanguage=en`);
     const loc = await geo.json();
-    getWeather(loc.city || loc.locality || "Delhi");
+    getWeather(loc.city || "Delhi");
   }, () => getWeather("Delhi"));
 } else getWeather("Delhi");
 
-// 🌙 Theme Toggle
+// 🌙 Theme toggle
 document.getElementById("theme-toggle").addEventListener("click", () => {
   document.body.classList.toggle("dark");
   document.getElementById("theme-toggle").textContent =
