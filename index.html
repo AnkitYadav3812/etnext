@@ -1,118 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ETNext — AI Smart News & Weather</title>
-<link rel="icon" href="etnext-logo.png" type="image/png" />
+<link rel="icon" href="etnext-logo.png" type="image/png">
 
 <style>
-@custom-variant dark (&:is(.dark *));
+/* ------------------ BASE THEME ------------------ */
 :root {
-  --font-size: 16px;
   --background: #ffffff;
-  --foreground: oklch(0.145 0 0);
-  --primary: #030213;
-  --primary-foreground: oklch(1 0 0);
-  --accent: #e9ebef;
-  --accent-foreground: #030213;
-  --border: rgba(0, 0, 0, 0.1);
+  --foreground: #111111;
+  --primary: #d32f2f;
+  --accent: #f6f6f8;
   --radius: 0.625rem;
-  --muted-foreground: #717182;
 }
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --border: oklch(0.269 0 0);
+  --background: #111111;
+  --foreground: #ffffff;
+  --primary: #ef5350;
+  --accent: #1e1e1e;
 }
 body {
-  background-color: var(--background);
+  margin: 0;
+  background: var(--background);
   color: var(--foreground);
   font-family: "Poppins", sans-serif;
-  margin: 0;
   transition: all 0.3s ease;
 }
+
+/* ------------------ HEADER ------------------ */
 header {
-  background: linear-gradient(90deg, var(--primary), #1a1a2e);
-  color: var(--primary-foreground);
-  padding: 1rem 2rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: var(--primary);
+  color: #fff;
   position: sticky;
   top: 0;
   z-index: 10;
 }
-.logo-img {
+header img {
   height: 45px;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 6px;
 }
 nav {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 nav button {
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  color: var(--primary-foreground);
-  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  border: none;
   padding: 0.5rem 1rem;
-  font-weight: 500;
-  transition: 0.3s;
+  border-radius: 25px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 nav button:hover, nav button.active {
-  background: var(--accent-foreground);
-  color: var(--accent);
+  background: #fff;
+  color: var(--primary);
 }
+
+/* ------------------ SEARCH ------------------ */
 .search-container {
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem auto;
   max-width: 600px;
+  margin: 1.5rem auto;
+  display: flex;
   gap: 0.5rem;
 }
 .search-bar {
   flex: 1;
   padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
   border-radius: 25px;
-  border: 1px solid var(--border);
   font-size: 1rem;
-  background: var(--accent);
-  color: var(--foreground);
 }
 .voice-btn {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border: none;
-  border-radius: 50%;
   width: 45px;
   height: 45px;
-  cursor: pointer;
-  font-size: 1.3rem;
-}
-.theme-toggle {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.5rem;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-size: 1.3rem;
   cursor: pointer;
 }
+
+/* ------------------ TICKER ------------------ */
 .ticker {
   background: var(--accent);
-  color: var(--accent-foreground);
+  color: var(--foreground);
   padding: 0.7rem 1rem;
   overflow: hidden;
   white-space: nowrap;
@@ -125,9 +104,11 @@ nav button:hover, nav button.active {
   from { transform: translateX(100%); }
   to { transform: translateX(-100%); }
 }
+
+/* ------------------ MAIN ------------------ */
 main {
   max-width: 1200px;
-  margin: 2rem auto;
+  margin: 1.5rem auto;
   padding: 0 1rem;
 }
 .news-grid {
@@ -136,15 +117,14 @@ main {
   gap: 1.5rem;
 }
 .news-card {
-  background: var(--card, #fff);
-  border: 1px solid var(--border);
+  background: var(--accent);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: 0.3s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 .news-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transform: translateY(-3px);
 }
 .news-card img {
   width: 100%;
@@ -157,100 +137,93 @@ main {
 .news-card h3 {
   margin: 0.5rem 0;
   font-size: 1.1rem;
-  color: var(--foreground);
 }
 .news-card p {
-  color: var(--muted-foreground);
   font-size: 0.9rem;
-  line-height: 1.4;
+  color: #666;
 }
 .read-more {
   display: inline-block;
   margin-top: 0.5rem;
+  padding: 0.4rem 0.9rem;
   background: var(--primary);
-  color: var(--primary-foreground);
+  color: #fff;
   text-decoration: none;
-  padding: 0.5rem 1rem;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
+
+/* ------------------ FOOTER ------------------ */
 footer {
   text-align: center;
-  background: var(--accent);
-  color: var(--accent-foreground);
+  background: var(--primary);
+  color: #fff;
   padding: 1rem;
   margin-top: 2rem;
   font-size: 0.9rem;
 }
 
-/* 🌤️ Weather Widget */
+/* ------------------ THEME BUTTON ------------------ */
+.theme-toggle {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* ------------------ WEATHER ------------------ */
 #weather-widget {
   position: fixed;
-  bottom: 90px;
+  bottom: 85px;
   right: 1.5rem;
   background: var(--accent);
-  color: var(--accent-foreground);
-  border-radius: 16px;
+  color: var(--foreground);
+  padding: 1rem;
+  border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  padding: 1rem 1.2rem;
-  min-width: 180px;
   text-align: center;
-  font-size: 0.9rem;
+  min-width: 170px;
   z-index: 50;
-  transition: all 0.3s ease;
-  overflow: hidden;
 }
-#weather-widget.collapsed {
-  height: 40px;
-  padding: 0.5rem 1rem;
-}
-#weather-widget button {
-  background: none;
-  border: none;
-  color: inherit;
-  font-size: 1.2rem;
-  cursor: pointer;
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
-#weather-widget h4 {
-  margin: 0.3rem 0;
+#weather-widget img {
+  width: 40px;
 }
 </style>
 </head>
 
 <body>
 <header>
-  <img src="etnext-logo.png" alt="ETNext Logo" class="logo-img" />
+  <img src="etnext-logo.png" alt="ETNext Logo">
   <nav id="nav"></nav>
 </header>
 
 <div class="search-container">
-  <input type="text" id="search-input" class="search-bar" placeholder="Search latest news...">
+  <input type="text" id="search-input" class="search-bar" placeholder="Search news... (e.g. AI, Cricket, Elections)">
   <button id="voice-btn" class="voice-btn">🎤</button>
 </div>
 
 <div class="ticker">
-  <div class="ticker-content" id="ticker-content">Breaking News: Fetching top headlines...</div>
+  <div class="ticker-content" id="ticker-content">Breaking News: Fetching latest headlines...</div>
 </div>
 
 <main>
   <div id="content"></div>
 </main>
 
-<footer>
-  © 2025 ETNext — AI-Powered Smart News & Weather by Ankit Yadav
-</footer>
+<footer>© 2025 ETNext — Smart News & Weather by Ankit Yadav</footer>
 
 <button class="theme-toggle" id="theme-toggle">🌙</button>
-<div id="weather-widget">⏳ Loading weather...</div>
+<div id="weather-widget">🌤 Loading weather...</div>
 
 <script>
-const nav = document.getElementById("nav");
-const content = document.getElementById("content");
-const searchInput = document.getElementById("search-input");
-
+// ------------------ CATEGORY SETUP ------------------
 const categories = [
   { name: "🌏 World", url: "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en" },
   { name: "💼 Business", url: "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-IN&gl=IN&ceid=IN:en" },
@@ -258,111 +231,101 @@ const categories = [
   { name: "🏏 Sports", url: "https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-IN&gl=IN&ceid=IN:en" },
   { name: "🎬 Entertainment", url: "https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-IN&gl=IN&ceid=IN:en" }
 ];
-categories.forEach((cat, i) => {
-  const btn = document.createElement("button");
-  btn.textContent = cat.name;
-  btn.onclick = () => loadCategory(i);
-  nav.appendChild(btn);
-});
+const nav = document.getElementById("nav");
+const content = document.getElementById("content");
 
+categories.forEach((c, i) => {
+  const b = document.createElement("button");
+  b.textContent = c.name;
+  b.onclick = () => loadCategory(i);
+  nav.appendChild(b);
+});
 loadCategory(0);
 
 async function loadCategory(i) {
   nav.querySelectorAll("button").forEach(b => b.classList.remove("active"));
   nav.children[i].classList.add("active");
   content.innerHTML = `<div style='text-align:center;'>🤖 Loading ${categories[i].name}...</div>`;
-  const rss = categories[i].url;
-  const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`;
-  try {
-    const res = await fetch(api);
-    const data = await res.json();
-    displayNews(data.items.slice(0, 10), categories[i].name);
-  } catch {
-    content.innerHTML = "❌ Error loading news.";
-  }
+  const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(categories[i].url)}`;
+  const data = await fetch(api).then(r => r.json()).catch(() => null);
+  if (!data) return content.innerHTML = "⚠️ Error loading news.";
+  displayNews(data.items.slice(0, 10), categories[i].name);
 }
 
+// ------------------ DISPLAY NEWS ------------------
 function displayNews(articles, title) {
-  content.innerHTML = `<h2 style='text-align:center;margin-bottom:1rem;'>${title}</h2><div class='news-grid'></div>`;
+  content.innerHTML = `<h2 style='text-align:center;'>${title}</h2><div class='news-grid'></div>`;
   const grid = content.querySelector(".news-grid");
+
   articles.forEach(a => {
-    let img = (a.enclosure && a.enclosure.link) || a.thumbnail || "https://via.placeholder.com/400x200?text=ETNext";
+    let img = "";
+    if (a.enclosure && a.enclosure.link) img = a.enclosure.link;
+    else if (a.media && a.media.content && a.media.content.url) img = a.media.content.url;
+    else if (a.thumbnail) img = a.thumbnail;
+    else if (a.description && a.description.includes("<img")) {
+      const m = a.description.match(/<img[^>]+src="([^">]+)"/);
+      if (m) img = m[1];
+    }
+    if (!img) img = "https://via.placeholder.com/400x200?text=ETNext+News";
+
     const card = document.createElement("div");
     card.className = "news-card";
     card.innerHTML = `
-      <img src="${img}" onerror="this.src='https://via.placeholder.com/400x200?text=ETNext'">
+      <img src="${img}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'">
       <div class="content">
         <h3>${a.title}</h3>
-        <p>${a.description || "No description available."}</p>
+        <p>${a.description?.replace(/<[^>]*>?/gm, '').slice(0,150) || "No description available."}</p>
         <a href="${a.link}" target="_blank" class="read-more">Read More</a>
       </div>`;
     grid.appendChild(card);
   });
 }
 
-// 🌍 Local News
-if ("geolocation" in navigator) {
+// ------------------ LOCAL WEATHER ------------------
+const weather = document.getElementById("weather-widget");
+async function getWeather(city) {
+  try {
+    const res = await fetch(`https://api.weatherapi.com/v1/current.json?key=6b36b4ff0a7549ce8b412374424110&q=${encodeURIComponent(city)}`);
+    const d = await res.json();
+    weather.innerHTML = `<h4>${d.location.name}</h4><img src="${d.current.condition.icon}" alt=""><div>${d.current.temp_c}°C | ${d.current.condition.text}</div>`;
+  } catch {
+    weather.innerHTML = "☁️ Weather unavailable";
+  }
+}
+if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(async pos => {
     const { latitude, longitude } = pos.coords;
     const geo = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
     const loc = await geo.json();
-    const city = loc.city || loc.locality || "your area";
-    const rss = `https://news.google.com/rss/search?q=${encodeURIComponent(city)}&hl=en-IN&gl=IN&ceid=IN:en`;
-    const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`;
-    const data = await fetch(api).then(r => r.json());
-    if (data.items.length > 0) displayNews(data.items.slice(0, 10), `🗺️ Local News from ${city}`);
-    updateWeather(city);
-  });
+    const city = loc.city || loc.locality || "Delhi";
+    getWeather(city);
+  }, () => getWeather("Delhi"));
+} else {
+  getWeather("Delhi");
 }
 
-// 🌦️ Weather Widget with Collapse
-const widget = document.getElementById("weather-widget");
-if (localStorage.getItem("weatherCollapsed") === "true") widget.classList.add("collapsed");
-
-function toggleWeatherWidget() {
-  widget.classList.toggle("collapsed");
-  localStorage.setItem("weatherCollapsed", widget.classList.contains("collapsed"));
-}
-
-async function updateWeather(city) {
-  try {
-    const res = await fetch(`https://api.weatherapi.com/v1/current.json?key=6b36b4ff0a7549ce8b412374424110&q=${encodeURIComponent(city)}`);
-    const data = await res.json();
-    widget.innerHTML = `
-      <button onclick="toggleWeatherWidget()">${widget.classList.contains("collapsed") ? "▲" : "▼"}</button>
-      <div class="weather-content" style="opacity:${widget.classList.contains("collapsed") ? 0 : 1}; transition:opacity 0.3s;">
-        <h4>${data.location.name}</h4>
-        <div>${data.current.temp_c}°C | ${data.current.condition.text}</div>
-        <img src="${data.current.condition.icon}" width="40" height="40" alt="Weather Icon">
-      </div>
-    `;
-  } catch {
-    widget.textContent = "☁️ Weather unavailable";
-  }
-}
-
-// 🎤 Voice + Search
-const voiceBtn = document.getElementById("voice-btn");
-if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-  recognition.lang = 'en-US';
-  voiceBtn.onclick = () => recognition.start();
-  recognition.onresult = e => {
-    const transcript = e.results[0][0].transcript;
-    searchInput.value = transcript;
-    performSearch(transcript);
-  };
-}
+// ------------------ SEARCH + VOICE ------------------
+const searchInput = document.getElementById("search-input");
+searchInput.addEventListener("keypress", e => { if (e.key === "Enter") performSearch(searchInput.value); });
 async function performSearch(q) {
   if (!q) return;
-  const rss = `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-IN&gl=IN&ceid=IN:en`;
-  const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`;
-  const data = await fetch(api).then(r => r.json());
-  displayNews(data.items.slice(0, 10), `🔎 Results for "${q}"`);
+  const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent("https://news.google.com/rss/search?q="+q+"&hl=en-IN&gl=IN&ceid=IN:en")}`;
+  const d = await fetch(api).then(r => r.json());
+  displayNews(d.items.slice(0, 10), `🔍 Results for "${q}"`);
 }
-searchInput.addEventListener("keypress", e => { if (e.key === "Enter") performSearch(searchInput.value); });
+const voiceBtn = document.getElementById("voice-btn");
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  rec.lang = 'en-IN';
+  voiceBtn.onclick = () => rec.start();
+  rec.onresult = e => {
+    const q = e.results[0][0].transcript;
+    searchInput.value = q;
+    performSearch(q);
+  };
+}
 
-// 🌗 Theme Toggle
+// ------------------ THEME TOGGLE ------------------
 document.getElementById("theme-toggle").addEventListener("click", () => {
   document.body.classList.toggle("dark");
   document.getElementById("theme-toggle").textContent =
