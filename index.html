@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ETNext — AI Smart News & Weather</title>
+<title>ETNext — Smart News & Weather</title>
 <link rel="icon" href="etnext-logo.png" type="image/png">
-
 <style>
-/* ------------------ BASE THEME ------------------ */
 :root {
   --background: #ffffff;
   --foreground: #111111;
@@ -28,8 +26,6 @@ body {
   font-family: "Poppins", sans-serif;
   transition: all 0.3s ease;
 }
-
-/* ------------------ HEADER ------------------ */
 header {
   display: flex;
   justify-content: space-between;
@@ -62,8 +58,6 @@ nav button:hover, nav button.active {
   background: #fff;
   color: var(--primary);
 }
-
-/* ------------------ SEARCH ------------------ */
 .search-container {
   max-width: 600px;
   margin: 1.5rem auto;
@@ -87,8 +81,6 @@ nav button:hover, nav button.active {
   font-size: 1.3rem;
   cursor: pointer;
 }
-
-/* ------------------ TICKER ------------------ */
 .ticker {
   background: var(--accent);
   color: var(--foreground);
@@ -104,8 +96,6 @@ nav button:hover, nav button.active {
   from { transform: translateX(100%); }
   to { transform: translateX(-100%); }
 }
-
-/* ------------------ MAIN ------------------ */
 main {
   max-width: 1200px;
   margin: 1.5rem auto;
@@ -152,8 +142,6 @@ main {
   border-radius: 20px;
   font-size: 0.8rem;
 }
-
-/* ------------------ FOOTER ------------------ */
 footer {
   text-align: center;
   background: var(--primary);
@@ -162,8 +150,6 @@ footer {
   margin-top: 2rem;
   font-size: 0.9rem;
 }
-
-/* ------------------ THEME BUTTON ------------------ */
 .theme-toggle {
   position: fixed;
   bottom: 1.5rem;
@@ -177,8 +163,6 @@ footer {
   font-size: 1.4rem;
   cursor: pointer;
 }
-
-/* ------------------ WEATHER ------------------ */
 #weather-widget {
   position: fixed;
   bottom: 85px;
@@ -197,33 +181,23 @@ footer {
 }
 </style>
 </head>
-
 <body>
 <header>
   <img src="etnext-logo.png" alt="ETNext Logo">
   <nav id="nav"></nav>
 </header>
-
 <div class="search-container">
   <input type="text" id="search-input" class="search-bar" placeholder="Search news... (e.g. AI, Cricket, Elections)">
   <button id="voice-btn" class="voice-btn">🎤</button>
 </div>
-
 <div class="ticker">
   <div class="ticker-content" id="ticker-content">Breaking News: Fetching latest headlines...</div>
 </div>
-
-<main>
-  <div id="content"></div>
-</main>
-
-<footer>© 2025 ETNext — Smart News & Weather by Ankit Yadav</footer>
-
+<main><div id="content"></div></main>
+<footer>© 2025 ETNext — Smart News & Weather</footer>
 <button class="theme-toggle" id="theme-toggle">🌙</button>
 <div id="weather-widget">🌤 Loading weather...</div>
-
 <script>
-// ------------------ CATEGORY SETUP ------------------
 const categories = [
   { name: "🌏 World", url: "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en" },
   { name: "💼 Business", url: "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-IN&gl=IN&ceid=IN:en" },
@@ -233,7 +207,6 @@ const categories = [
 ];
 const nav = document.getElementById("nav");
 const content = document.getElementById("content");
-
 categories.forEach((c, i) => {
   const b = document.createElement("button");
   b.textContent = c.name;
@@ -252,11 +225,9 @@ async function loadCategory(i) {
   displayNews(data.items.slice(0, 10), categories[i].name);
 }
 
-// ------------------ DISPLAY NEWS ------------------
 function displayNews(articles, title) {
   content.innerHTML = `<h2 style='text-align:center;'>${title}</h2><div class='news-grid'></div>`;
   const grid = content.querySelector(".news-grid");
-
   articles.forEach(a => {
     let img = "";
     if (a.enclosure && a.enclosure.link) img = a.enclosure.link;
@@ -266,12 +237,16 @@ function displayNews(articles, title) {
       const m = a.description.match(/<img[^>]+src="([^">]+)"/);
       if (m) img = m[1];
     }
+    if (!img && a.link.includes("news.google.com")) {
+      const id = a.link.match(/\/CB(.*)/)?.[1]?.substring(0, 15) || Math.floor(Math.random()*9999);
+      img = `https://lh3.googleusercontent.com/proxy/${id}=w400-h225-n`;
+    }
     if (!img) img = "https://via.placeholder.com/400x200?text=ETNext+News";
-
     const card = document.createElement("div");
     card.className = "news-card";
     card.innerHTML = `
-      <img src="${img}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'">
+      <img src="${img}" loading="lazy" alt="News Image" 
+        onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'">
       <div class="content">
         <h3>${a.title}</h3>
         <p>${a.description?.replace(/<[^>]*>?/gm, '').slice(0,150) || "No description available."}</p>
@@ -281,16 +256,13 @@ function displayNews(articles, title) {
   });
 }
 
-// ------------------ LOCAL WEATHER ------------------
 const weather = document.getElementById("weather-widget");
 async function getWeather(city) {
   try {
     const res = await fetch(`https://api.weatherapi.com/v1/current.json?key=6b36b4ff0a7549ce8b412374424110&q=${encodeURIComponent(city)}`);
     const d = await res.json();
     weather.innerHTML = `<h4>${d.location.name}</h4><img src="${d.current.condition.icon}" alt=""><div>${d.current.temp_c}°C | ${d.current.condition.text}</div>`;
-  } catch {
-    weather.innerHTML = "☁️ Weather unavailable";
-  }
+  } catch { weather.innerHTML = "☁️ Weather unavailable"; }
 }
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(async pos => {
@@ -300,11 +272,8 @@ if (navigator.geolocation) {
     const city = loc.city || loc.locality || "Delhi";
     getWeather(city);
   }, () => getWeather("Delhi"));
-} else {
-  getWeather("Delhi");
-}
+} else getWeather("Delhi");
 
-// ------------------ SEARCH + VOICE ------------------
 const searchInput = document.getElementById("search-input");
 searchInput.addEventListener("keypress", e => { if (e.key === "Enter") performSearch(searchInput.value); });
 async function performSearch(q) {
@@ -324,8 +293,6 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
     performSearch(q);
   };
 }
-
-// ------------------ THEME TOGGLE ------------------
 document.getElementById("theme-toggle").addEventListener("click", () => {
   document.body.classList.toggle("dark");
   document.getElementById("theme-toggle").textContent =
