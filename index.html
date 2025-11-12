@@ -1,272 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ETNext — Smart News & Weather</title>
-<link rel="icon" href="etnext-logo.png" type="image/png" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-<style>
-:root {
-  --background: #ffffff;
-  --foreground: #111111;
-  --primary: #d32f2f;
-  --accent: #f6f6f8;
-  --radius: 0.625rem;
-}
-.dark {
-  --background: #111111;
-  --foreground: #ffffff;
-  --primary: #ef5350;
-  --accent: #1e1e1e;
-}
-body {
-  margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "Poppins", sans-serif;
-  transition: all 0.3s ease;
-}
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: var(--primary);
-  color: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-header img {
-  height: 45px;
-  border-radius: 6px;
-}
-nav {
-  display: flex;
-  gap: 0.75rem;
-}
-nav button {
-  background: rgba(255,255,255,0.1);
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-nav button:hover, nav button.active {
-  background: #fff;
-  color: var(--primary);
-}
-.search-container {
-  max-width: 600px;
-  margin: 1.5rem auto;
-  display: flex;
-  gap: 0.5rem;
-}
-.search-bar {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  font-size: 1rem;
-}
-.voice-btn {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: none;
-  background: var(--primary);
-  color: #fff;
-  font-size: 1.3rem;
-  cursor: pointer;
-}
-.ticker {
-  background: var(--accent);
-  color: var(--foreground);
-  padding: 0.7rem 1rem;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.ticker-content {
-  display: inline-block;
-  animation: scroll 35s linear infinite;
-}
-@keyframes scroll {
-  from { transform: translateX(100%); }
-  to { transform: translateX(-100%); }
-}
-main {
-  max-width: 1200px;
-  margin: 1.5rem auto;
-  padding: 0 1rem;
-}
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-.news-card {
-  background: var(--accent);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: 0.3s;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.news-card:hover {
-  transform: translateY(-3px);
-}
-.news-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-.news-card .content {
-  padding: 1rem;
-}
-.news-card h3 {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
-}
-.news-card p {
-  font-size: 0.9rem;
-  color: #666;
-}
-.read-more {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 0.4rem 0.9rem;
-  background: var(--primary);
-  color: #fff;
-  text-decoration: none;
-  border-radius: 20px;
-  font-size: 0.8rem;
-}
-.theme-toggle {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.4rem;
-  cursor: pointer;
-}
-#weather-widget {
-  position: fixed;
-  bottom: 85px;
-  right: 1.5rem;
-  background: var(--accent);
-  color: var(--foreground);
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  text-align: center;
-  min-width: 170px;
-  z-index: 50;
-}
-#weather-widget img {
-  width: 40px;
-}
-
-/* --- Modern Footer --- */
-footer {
-  background: #111;
-  color: #ddd;
-  padding: 3rem 2rem;
-  margin-top: 2rem;
-}
-.footer-container {
-  max-width: 1300px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-}
-.footer-brand h3 {
-  color: #fff;
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-.footer-brand p {
-  color: #aaa;
-  margin-bottom: 1rem;
-}
-.social-icons a {
-  margin-right: 10px;
-  color: #aaa;
-  font-size: 1.3rem;
-  transition: color 0.3s;
-}
-.social-icons a:hover { color: #ef5350; }
-.footer-links h4 { color: #fff; margin-bottom: 1rem; }
-.footer-links a {
-  color: #aaa;
-  text-decoration: none;
-  font-size: 0.95rem;
-  transition: color 0.3s;
-}
-.footer-links a:hover { color: #fff; }
-.footer-bottom {
-  border-top: 1px solid #333;
-  margin-top: 2rem;
-  text-align: center;
-  padding-top: 1rem;
-  color: #666;
-  font-size: 0.9rem;
-}
-</style>
-</head>
-<body>
-<header>
-  <img src="etnext-logo.png" alt="ETNext Logo" />
-  <nav id="nav"></nav>
-</header>
-<div class="search-container">
-  <input type="text" id="search-input" class="search-bar" placeholder="Search news... (e.g. AI, Cricket, Elections)" />
-  <button id="voice-btn" class="voice-btn">🎤</button>
-</div>
-<div class="ticker">
-  <div class="ticker-content" id="ticker-content">Breaking News: Fetching latest headlines...</div>
-</div>
-<main><div id="content"></div></main>
-
-<footer>
-  <div class="footer-container">
-    <div class="footer-brand">
-      <h3>ETNext</h3>
-      <p>Your trusted source for breaking news, insights, and expert commentary worldwide.</p>
-      <div class="social-icons">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-      </div>
-    </div>
-    <div class="footer-links">
-      <h4>News</h4>
-      <a href="#">AI</a><br><a href="#">Technology</a><br><a href="#">Business</a><br><a href="#">Sports</a>
-    </div>
-    <div class="footer-links">
-      <h4>Company</h4>
-      <a href="#">About Us</a><br><a href="#">Careers</a><br><a href="#">Advertise</a>
-    </div>
-    <div class="footer-links">
-      <h4>Resources</h4>
-      <a href="#">Help Center</a><br><a href="#">Terms</a><br><a href="#">Privacy Policy</a>
-    </div>
-  </div>
-  <div class="footer-bottom">© 2025 ETNext. All Rights Reserved.</div>
-</footer>
-
-<button class="theme-toggle" id="theme-toggle">🌙</button>
-<div id="weather-widget">🌤 Loading weather...</div>
-
 <script>
 const categories = [
   { name: "🌏 World", url: "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en" },
@@ -275,46 +6,79 @@ const categories = [
   { name: "🏏 Sports", url: "https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-IN&gl=IN&ceid=IN:en" },
   { name: "🎬 Entertainment", url: "https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-IN&gl=IN&ceid=IN:en" }
 ];
+
 const nav = document.getElementById("nav");
 const content = document.getElementById("content");
-categories.forEach((c, i) => {
-  const b = document.createElement("button");
-  b.textContent = c.name;
-  b.onclick = () => loadCategory(i);
-  nav.appendChild(b);
-});
-loadCategory(0);
 
+// Create category buttons
+categories.forEach((c, i) => {
+  const btn = document.createElement("button");
+  btn.textContent = c.name;
+  btn.onclick = () => loadCategory(i);
+  nav.appendChild(btn);
+});
+
+loadCategory(0); // Load default
+
+// ⚡️ Cache system using sessionStorage
 async function loadCategory(i) {
   nav.querySelectorAll("button").forEach(b => b.classList.remove("active"));
   nav.children[i].classList.add("active");
   content.innerHTML = `<div style='text-align:center;'>🤖 Loading ${categories[i].name}...</div>`;
+
+  const cacheKey = `ETNext_${categories[i].name}`;
+  const cached = sessionStorage.getItem(cacheKey);
+  const cachedTime = sessionStorage.getItem(cacheKey + "_time");
+  const now = Date.now();
+
+  if (cached && cachedTime && now - cachedTime < 3600000) { // 1 hour cache
+    const data = JSON.parse(cached);
+    return displayNews(data, categories[i].name);
+  }
+
   const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(categories[i].url)}`;
-  const data = await fetch(api).then(r => r.json()).catch(() => null);
-  if (!data) return content.innerHTML = "⚠️ Error loading news.";
-  displayNews(data.items.slice(0, 10), categories[i].name);
+  try {
+    const response = await fetch(api);
+    const data = await response.json();
+    const items = data.items.slice(0, 10);
+    sessionStorage.setItem(cacheKey, JSON.stringify(items));
+    sessionStorage.setItem(cacheKey + "_time", now);
+    displayNews(items, categories[i].name);
+  } catch (e) {
+    content.innerHTML = "⚠️ Error loading news.";
+  }
 }
 
+// 🖼️ Display news with image fixes
 function displayNews(articles, title) {
   content.innerHTML = `<h2 style='text-align:center;'>${title}</h2><div class='news-grid'></div>`;
   const grid = content.querySelector(".news-grid");
+
   articles.forEach(a => {
     let img = "";
-    if (a.enclosure && a.enclosure.link) img = a.enclosure.link;
+
+    if (a.enclosure?.link) img = a.enclosure.link;
+    else if (a.media?.content?.url) img = a.media.content.url;
     else if (a.thumbnail) img = a.thumbnail;
-    else if (a.description && a.description.includes("<img")) {
-      const m = a.description.match(/<img[^>]+src="([^">]+)"/);
-      if (m) img = m[1];
+    else if (a.description?.includes("<img")) {
+      const match = a.description.match(/<img[^>]+src=["']([^"'>]+)["']/);
+      if (match) img = match[1];
+    }
+    if (!img && a.link.includes("youtube.com")) {
+      const id = a.link.match(/v=([^&]+)/)?.[1];
+      if (id) img = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
     }
     if (!img && a.link.includes("news.google.com")) {
-      const id = a.link.match(/\/CB(.*)/)?.[1]?.substring(0, 15) || Math.floor(Math.random()*9999);
-      img = `https://lh3.googleusercontent.com/proxy/${id}=w400-h225-n`;
+      const id = btoa(a.link).slice(0, 40);
+      img = `https://encrypted-tbn0.gstatic.com/images?q=tbn:${id}`;
     }
     if (!img) img = "https://via.placeholder.com/400x200?text=ETNext+News";
+
     const card = document.createElement("div");
     card.className = "news-card";
     card.innerHTML = `
-      <img src="${img}" alt="News Image" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'">
+      <img src="${img}" alt="News Image" loading="lazy"
+           onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'">
       <div class="content">
         <h3>${a.title}</h3>
         <p>${a.description?.replace(/<[^>]*>?/gm, '').slice(0,150) || "No description available."}</p>
@@ -324,13 +88,16 @@ function displayNews(articles, title) {
   });
 }
 
+// 🌤️ Weather System
 const weather = document.getElementById("weather-widget");
 async function getWeather(city) {
   try {
     const res = await fetch(`https://api.weatherapi.com/v1/current.json?key=6b36b4ff0a7549ce8b412374424110&q=${encodeURIComponent(city)}`);
     const d = await res.json();
     weather.innerHTML = `<h4>${d.location.name}</h4><img src="${d.current.condition.icon}" alt=""><div>${d.current.temp_c}°C | ${d.current.condition.text}</div>`;
-  } catch { weather.innerHTML = "☁️ Weather unavailable"; }
+  } catch {
+    weather.innerHTML = "☁️ Weather unavailable";
+  }
 }
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(async pos => {
@@ -342,11 +109,35 @@ if (navigator.geolocation) {
   }, () => getWeather("Delhi"));
 } else getWeather("Delhi");
 
+// 🔍 Search and voice input
+const searchInput = document.getElementById("search-input");
+searchInput.addEventListener("keypress", e => {
+  if (e.key === "Enter") performSearch(searchInput.value);
+});
+
+async function performSearch(q) {
+  if (!q) return;
+  const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent("https://news.google.com/rss/search?q="+q+"&hl=en-IN&gl=IN&ceid=IN:en")}`;
+  const d = await fetch(api).then(r => r.json());
+  displayNews(d.items.slice(0, 10), `🔍 Results for "${q}"`);
+}
+
+const voiceBtn = document.getElementById("voice-btn");
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  rec.lang = 'en-IN';
+  voiceBtn.onclick = () => rec.start();
+  rec.onresult = e => {
+    const q = e.results[0][0].transcript;
+    searchInput.value = q;
+    performSearch(q);
+  };
+}
+
+// 🌙 Dark mode
 document.getElementById("theme-toggle").addEventListener("click", () => {
   document.body.classList.toggle("dark");
   document.getElementById("theme-toggle").textContent =
     document.body.classList.contains("dark") ? "☀️" : "🌙";
 });
 </script>
-</body>
-</html>
