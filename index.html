@@ -103,7 +103,10 @@ nav button:hover, nav button.active {
 }
 .ticker-content {
   display: inline-block;
-  animation: scroll 45s linear infinite;
+  animation: scroll 90s linear infinite; /* 🐢 Slower speed */
+}
+.ticker:hover .ticker-content {
+  animation-play-state: paused; /* ⏸️ Pause on hover */
 }
 @keyframes scroll {
   from { transform: translateX(100%); }
@@ -255,6 +258,7 @@ const categories = [
   { name: "🏏 Sports", url: "https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-IN&gl=IN&ceid=IN:en" },
   { name: "🎬 Entertainment", url: "https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-IN&gl=IN&ceid=IN:en" }
 ];
+
 const nav = document.getElementById("nav");
 const content = document.getElementById("content");
 const ticker = document.getElementById("ticker-content");
@@ -288,13 +292,12 @@ async function loadNews(url) {
       const link = item.querySelector("link")?.textContent;
       const desc = item.querySelector("description")?.textContent || "";
 
-      // 🖼 Better image extraction
+      // 🖼 Improved image extraction
       let img = "";
       const media = item.getElementsByTagName("media:content")[0];
       const enclosure = item.getElementsByTagName("enclosure")[0];
       const thumb = item.getElementsByTagName("media:thumbnail")[0];
       const imgMatch = desc.match(/<img[^>]+src="([^">]+)"/);
-
       if (media && media.getAttribute("url")) img = media.getAttribute("url");
       else if (enclosure && enclosure.getAttribute("url")) img = enclosure.getAttribute("url");
       else if (thumb && thumb.getAttribute("url")) img = thumb.getAttribute("url");
@@ -304,9 +307,8 @@ async function loadNews(url) {
       const text = desc.replace(/<[^>]*>?/gm, '').slice(0,150);
       const card = document.createElement("div");
       card.className = "news-card";
-      card.innerHTML = `
-        <img src="${img}" alt="News Image" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'">
-        <div class="content"><h3>${title}</h3><p>${text}</p><a href="${link}" target="_blank" class="read-more">Read More</a></div>`;
+      card.innerHTML = `<img src="${img}" alt="News Image" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=ETNext+News'">
+      <div class="content"><h3>${title}</h3><p>${text}</p><a href="${link}" target="_blank" class="read-more">Read More</a></div>`;
       grid.appendChild(card);
     });
     content.innerHTML = "";
@@ -316,7 +318,7 @@ async function loadNews(url) {
   }
 }
 
-// --- Breaking popup + weather + voice search remain same ---
+// Weather, popup, and other features remain same (already working)
 </script>
 </body>
 </html>
