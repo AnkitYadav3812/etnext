@@ -6,193 +6,157 @@
 <title>ETNext — Smart News</title>
 <link rel="icon" href="etnext-logo.png" type="image/png" />
 
-<!-- SHARE PREVIEW -->
+<!-- Share Preview -->
 <meta property="og:title" content="ETNext — Smart News" />
-<meta property="og:description" content="AI-powered breaking news and trending updates." />
+<meta property="og:description" content="Breaking news, trending stories, and smart updates — fast and clean." />
 <meta property="og:image" content="https://ankityadav3812.github.io/etnext/etnext-logo.png" />
 <meta property="og:url" content="https://ankityadav3812.github.io/etnext/" />
-<meta property="og:type" content="website" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://ankityadav3812.github.io/etnext/etnext-logo.png" />
 
 <style>
 :root {
   --primary: #d32f2f;
-  --accent: #f6f6f8;
-  --fg: #111;
+  --accent: #ffffff;
+  --foreground: #111;
+  --radius: 10px;
 }
 .dark {
-  --primary: #ef5350;
-  --accent: #1e1e1e;
-  --fg: #fff;
+  --accent: #101010;
+  --foreground: #fff;
 }
-
 body {
   margin: 0;
+  font-family: "Poppins", sans-serif;
   background: var(--accent);
-  color: var(--fg);
-  font-family: Poppins, sans-serif;
-  transition: 0.3s;
+  color: var(--foreground);
+  transition: 0.3s ease;
 }
-
-/* HEADER */
 header {
-  background: var(--primary);
-  color: #fff;
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 20;
+  padding: 1rem 2rem;
+  background: var(--primary);
+  color: #fff;
 }
-
-header img {
-  height: 45px;
-  border-radius: 6px;
-}
+header img { height: 45px; }
 
 nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 10px;
 }
-
 nav button {
   background: rgba(255,255,255,0.15);
   border: none;
-  color: #fff;
-  padding: 0.5rem 1rem;
+  padding: 6px 14px;
   border-radius: 20px;
-  cursor: pointer;
+  color: #fff;
 }
-nav button.active {
+nav button.active, nav button:hover {
   background: #fff;
   color: var(--primary);
 }
 
-/* SEARCH */
 .search-container {
-  max-width: 600px;
-  margin: 1rem auto;
+  max-width: 650px;
+  margin: 1.5rem auto;
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
 }
 .search-bar {
   flex: 1;
-  padding: 0.7rem 1rem;
+  padding: 0.8rem 1rem;
   border-radius: 25px;
   border: 1px solid #ccc;
 }
 .voice-btn {
-  width: 45px;
-  height: 45px;
   background: var(--primary);
   color: #fff;
-  border-radius: 50%;
   border: none;
-  font-size: 1.3rem;
+  width: 45px; height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
-/* TICKER */
 .ticker {
   background: #fff;
   color: #111;
-  padding: 0.6rem 1rem;
+  padding: 0.7rem;
+  border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   overflow: hidden;
   white-space: nowrap;
 }
 .ticker-content {
   display: inline-block;
-  animation: scroll 50s linear infinite;
+  animation: slide 20s linear infinite;
 }
-
-@keyframes scroll {
+@keyframes slide {
   from { transform: translateX(100%); }
   to   { transform: translateX(-100%); }
 }
 
-/* NEWS GRID */
 main {
-  max-width: 1200px;
-  margin: 1rem auto;
-  padding: 0 1rem;
-}
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-.news-card {
-  background: #fff;
-  border-radius: 8px;
+  max-width: 1100px;
   padding: 1rem;
+  margin: auto;
+}
+.news-item {
+  background: #fff;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: var(--radius);
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-.news-card h3 { margin: 0 0 0.4rem 0; }
-.news-card p { color: #555; }
+.dark .news-item { background: #181818; }
 
-/* POPUP */
+footer {
+  margin-top: 2rem;
+  padding: 1rem;
+  text-align: center;
+  background: #000;
+  color: #eee;
+  font-size: 0.9rem;
+}
+
+.theme-toggle {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
 .breaking-popup {
   position: fixed;
   left: 1rem;
   bottom: 1rem;
-  background: #ffe9e9;
-  border-left: 5px solid #d32f2f;
-  padding: 10px 14px;
+  background: #ffecec;
+  border-left: 6px solid #d32f2f;
+  padding: 12px 16px;
   border-radius: 10px;
-  box-shadow: 0 6px 20px rgba(0,0,0,.15);
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: 0.25s;
-  max-width: 330px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  display: none;
   z-index: 999;
-}
-.breaking-popup.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* DARK MODE BUTTON */
-.theme-toggle {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  background: var(--primary);
-  color: #fff;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  border: none;
-  font-size: 1.3rem;
-}
-
-/* FOOTER */
-footer {
-  background: #111;
-  color: #bbb;
-  padding: 2rem;
-  text-align: center;
-  margin-top: 2rem;
 }
 </style>
 </head>
 
 <body>
+
 <header>
-  <img src="etnext-logo.png" />
+  <img src="etnext-logo.png" alt="ETNext" />
   <nav id="nav"></nav>
 </header>
 
-<div class="ticker"><div id="ticker-content" class="ticker-content">Loading...</div></div>
+<div class="ticker"><span id="ticker-content">Loading headlines...</span></div>
 
 <div class="search-container">
-  <input id="search-input" class="search-bar" placeholder="Search news...">
+  <input id="search-input" class="search-bar" placeholder="Search news..." />
   <button id="voice-btn" class="voice-btn">🎤</button>
 </div>
 
@@ -202,119 +166,113 @@ footer {
 
 <footer>© 2025 ETNext — Smart News</footer>
 
-<button id="theme-toggle" class="theme-toggle">🌙</button>
+<button class="theme-toggle" id="theme-toggle">🌙</button>
 
-<div id="breakingPopup" class="breaking-popup">
-  <div><b>Breaking:</b></div>
-  <div id="popupText">Loading...</div>
-</div>
+<div class="breaking-popup" id="breaking-popup"></div>
+
 
 <script>
-// CATEGORIES
-const categories = [
+const CATEGORIES = [
   { name: "🌍 World", url: "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en" },
   { name: "💼 Business", url: "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-IN&gl=IN&ceid=IN:en" },
-  { name: "⚙️ Tech", url: "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&gl=IN&ceid=IN:en" },
-  { name: "🏏 Sports", url: "https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-IN&ceid=IN:en" }
+  { name: "🛠 Tech", url: "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en" },
+  { name: "🏏 Sports", url: "https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-IN&gl=IN&ceid=IN:en" },
+  { name: "🎬 Entertainment", url: "https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-IN&gl=IN&ceid=IN:en" }
 ];
 
 const nav = document.getElementById("nav");
 const content = document.getElementById("content");
 const ticker = document.getElementById("ticker-content");
-const popup = document.getElementById("breakingPopup");
-const popupText = document.getElementById("popupText");
+const breakingBox = document.getElementById("breaking-popup");
 
-categories.forEach((c, i) => {
+CATEGORIES.forEach((cat, i) => {
   const b = document.createElement("button");
-  b.textContent = c.name;
-  b.onclick = () => loadNews(c.url, b);
+  b.textContent = cat.name;
+  b.onclick = () => loadNews(i);
   if (i === 0) b.classList.add("active");
   nav.appendChild(b);
 });
 
-// FIXED FAST RSS LOADER
 async function fetchRSS(url) {
-  const res = await fetch("https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(url));
-  const text = await res.text();
-  const xml = new DOMParser().parseFromString(text, "text/xml");
-  return Array.from(xml.querySelectorAll("item"));
+  const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`;
+  const res = await fetch(api);
+  return await res.json();
 }
 
-async function loadNews(url, btn) {
-  if (btn) {
-    document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-  }
+async function loadNews(index) {
+  nav.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+  nav.children[index].classList.add("active");
+
   content.innerHTML = "Loading...";
+
   try {
-    const items = await fetchRSS(url);
-    let html = "<div class='news-grid'>";
-    items.slice(0, 12).forEach(it => {
-      const title = it.querySelector("title")?.textContent;
-      const link = it.querySelector("link")?.textContent;
-      const desc = it.querySelector("description")?.textContent.replace(/<[^>]*>?/gm, "").slice(0, 150);
-      html += `
-        <div class="news-card">
-          <h3>${title}</h3>
-          <p>${desc}</p>
-          <a href="${link}" target="_blank">Read more →</a>
-        </div>
-      `;
+    const data = await fetchRSS(CATEGORIES[index].url);
+    const items = data.items;
+
+    content.innerHTML = "";
+    items.slice(0, 12).forEach(item => {
+      const text = item.description.replace(/<[^>]+>/g, "").slice(0, 180);
+      const div = document.createElement("div");
+      div.className = "news-item";
+      div.innerHTML = `<h3>${item.title}</h3><p>${text}...</p><a href="${item.link}" target="_blank">Read more</a>`;
+      content.appendChild(div);
     });
-    html += "</div>";
-    content.innerHTML = html;
-  } catch {
+  } catch (e) {
     content.innerHTML = "⚠️ Error loading news.";
   }
 }
 
-// TICKER + POPUP
-let lastTop = "";
+loadNews(0);
+
 async function updateTicker() {
   try {
-    const items = await fetchRSS(categories[0].url);
-    const titles = items.slice(0, 10).map(i => i.querySelector("title").textContent);
-    ticker.textContent = titles.join(" • ");
+    const data = await fetchRSS(CATEGORIES[0].url);
+    const titles = data.items.slice(0, 10).map(i => i.title);
+    ticker.textContent = "🔥 " + titles.join(" • ");
 
-    if (titles[0] !== lastTop) {
-      lastTop = titles[0];
-      popupText.textContent = titles[0];
-      popup.classList.add("show");
-      setTimeout(() => popup.classList.remove("show"), 6000);
-    }
+    breakingBox.textContent = titles[0];
+    breakingBox.style.display = "block";
+    setTimeout(() => (breakingBox.style.display = "none"), 6000);
   } catch {
     ticker.textContent = "⚠️ Failed to load headlines.";
   }
 }
 
 updateTicker();
-loadNews(categories[0].url);
-setInterval(updateTicker, 300000);
+setInterval(updateTicker, 1000 * 60 * 10);
 
-// DARK MODE
 document.getElementById("theme-toggle").onclick = () => {
   document.body.classList.toggle("dark");
 };
 
-// SEARCH
-document.getElementById("search-input").onkeypress = e => {
+document.getElementById("search-input").addEventListener("keypress", e => {
   if (e.key === "Enter") {
-    const q = e.target.value.trim();
-    loadNews(`https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-IN&gl=IN&ceid=IN:en`);
+    const q = e.target.value;
+    if (!q) return;
+    loadNewsSearch(q);
   }
-};
+});
 
-// VOICE SEARCH
-if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
-  const R = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-  R.lang = "en-IN";
-  document.getElementById("voice-btn").onclick = () => R.start();
-  R.onresult = e => {
-    const q = e.results[0][0].transcript;
-    document.getElementById("search-input").value = q;
-    loadNews(`https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-IN&ceid=IN:en`);
-  };
+async function loadNewsSearch(q) {
+  content.innerHTML = "Searching...";
+
+  const url = `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-IN&gl=IN&ceid=IN:en`;
+
+  try {
+    const data = await fetchRSS(url);
+    content.innerHTML = "";
+    data.items.slice(0, 12).forEach(i => {
+      const text = i.description.replace(/<[^>]+>/g,"").slice(0,180);
+      const div = document.createElement("div");
+      div.className = "news-item";
+      div.innerHTML = `<h3>${i.title}</h3><p>${text}</p><a href="${i.link}" target="_blank">Read more</a>`;
+      content.appendChild(div);
+    });
+  } catch {
+    content.innerHTML = "⚠️ Error during search.";
+  }
 }
 </script>
+
 </body>
 </html>
