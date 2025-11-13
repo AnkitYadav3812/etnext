@@ -4,306 +4,317 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ETNext — Smart News & Weather</title>
+<link rel="icon" href="etnext-logo.png" type="image/png">
 
-<link rel="icon" href="etnext-logo.png" type="image/png" />
-
-<!-- SHARE PREVIEW -->
-<meta property="og:title" content="ETNext — Smart News & Weather" />
-<meta property="og:description" content="AI-powered breaking news, trending updates & live headlines." />
-<meta property="og:image" content="https://ankityadav3812.github.io/etnext/etnext-logo.png" />
-<meta property="og:url" content="https://ankityadav3812.github.io/etnext/" />
-<meta property="og:type" content="website" />
+<!-- Social Preview -->
+<meta property="og:title" content="ETNext — Smart News & Breaking Headlines" />
+<meta property="og:description" content="Fast AI-powered breaking news updates, trending topics, search and voice search — all in one place." />
+<meta property="og:image" content="https://ankityadav3812.github.io/etnext/etnext-logo.png">
+<meta property="og:url" content="https://ankityadav3812.github.io/etnext/">
+<meta name="twitter:card" content="summary_large_image">
 
 <style>
 :root {
-  --primary:#d32f2f;
-  --foreground:#111;
-  --accent:#f6f6f8;
+  --primary: #d32f2f;
+  --bg: #ffffff;
+  --text: #111;
+  --card: #fafafa;
 }
 .dark {
-  --primary:#ef5350;
-  --foreground:#fff;
-  --accent:#1e1e1e;
+  --bg: #111;
+  --text: #fff;
+  --card: #1e1e1e;
+  --primary: #ef5350;
 }
 body {
-  margin:0;
-  font-family:"Poppins",sans-serif;
-  background:var(--accent);
-  color:var(--foreground);
-  transition:0.3s ease;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Poppins", sans-serif;
+  transition: 0.3s ease;
 }
 
 /* HEADER */
 header {
-  background:var(--primary);
-  padding:1rem 2rem;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:#fff;
-  position:sticky;
-  top:0;
-  z-index:20;
+  background: var(--primary);
+  padding: 1rem 2rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 header img {
-  height:45px;
-  border-radius:6px;
+  height: 45px;
 }
 
-/* NAVIGATION */
-nav {
-  display:flex;
-  flex-wrap:wrap;
-  gap:0.6rem;
-}
+/* NAV */
+nav { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 nav button {
-  background:rgba(255,255,255,0.1);
-  color:white;
-  border:none;
-  padding:0.45rem 1rem;
-  border-radius:20px;
-  cursor:pointer;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
 }
-nav button.active,
-nav button:hover {
-  background:white;
-  color:var(--primary);
+nav button.active {
+  background: white;
+  color: var(--primary);
+}
+
+/* TICKER */
+.ticker {
+  background: #fff;
+  color: #111;
+  padding: 0.6rem;
+  overflow: hidden;
+  border-bottom: 1px solid #ccc;
+  white-space: nowrap;
+}
+.ticker-content {
+  display: inline-block;
+  animation: scroll 45s linear infinite; /* SLOW SCROLL */
+}
+@keyframes scroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 /* SEARCH */
 .search-container {
-  max-width:600px;
-  margin:1rem auto;
-  display:flex;
-  gap:0.5rem;
+  max-width: 600px;
+  margin: 1rem auto;
+  display: flex;
+  gap: 0.5rem;
 }
 .search-bar {
-  flex:1;
-  padding:0.75rem 1rem;
-  border-radius:25px;
-  border:1px solid #ccc;
-  font-size:1rem;
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 25px;
+  border: 1px solid #aaa;
 }
 .voice-btn {
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  background:var(--primary);
-  color:white;
-  border:none;
-  cursor:pointer;
-  font-size:1.3rem;
+  width: 45px; height: 45px;
+  border: none;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-size: 1.3rem;
 }
 
-/* TRENDING BAR */
-#trending-bar {
-  background:white;
-  padding:10px;
-  font-weight:bold;
-  color:#d32f2f;
-  overflow:hidden;
-  white-space:nowrap;
-  border-bottom:1px solid #ddd;
+/* NEWS LIST */
+.news-list { padding: 1rem; max-width: 900px; margin: auto; }
+.news-item {
+  background: var(--card);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--primary);
 }
+.news-item h3 { margin: 0 0 5px; }
 
-/* GRID */
-main {
-  max-width:1200px;
-  margin:auto;
-  padding:1rem;
+/* POPUP */
+.breaking-popup {
+  position: fixed;
+  left: 1rem; bottom: 1rem;
+  background: #fff1f1;
+  border-left: 6px solid #d32f2f;
+  padding: 12px;
+  width: 260px;
+  max-width: 90%;
+  border-radius: 8px;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.25s;
+  z-index: 9999;
 }
-.news-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:1rem;
-}
-.news-card {
-  background:white;
-  padding:1rem;
-  border-radius:10px;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1);
-  cursor:pointer;
-  transition:0.2s;
-}
-.news-card:hover { transform:translateY(-2px); }
-
-.news-card h3 {
-  margin:0;
-  font-size:1.1rem;
-}
-
-footer {
-  background:#111;
-  color:#ccc;
-  text-align:center;
-  padding:2rem;
-  margin-top:2rem;
-}
+.breaking-popup.show { opacity: 1; transform: translateY(0); }
+.breaking-popup .title { font-weight: 700; margin-bottom: 4px; }
 
 .theme-toggle {
-  position:fixed;
-  right:1rem;
-  bottom:1rem;
-  background:var(--primary);
-  border:none;
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  font-size:1.4rem;
-  color:#fff;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 50px; height: 50px;
+  border: none; border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #111;
+  color: #ccc;
+  margin-top: 2rem;
 }
 </style>
 </head>
+
 <body>
 
 <header>
-  <img src="etnext-logo.png" alt="logo">
+  <img src="etnext-logo.png" />
   <nav id="nav"></nav>
 </header>
 
-<div id="trending-bar">🔥 Trending: Loading...</div>
+<div class="ticker"><div class="ticker-content" id="ticker"></div></div>
 
 <div class="search-container">
   <input id="search-input" class="search-bar" placeholder="Search news...">
-  <button id="voice-btn" class="voice-btn">🎤</button>
+  <button class="voice-btn" id="voice-btn">🎤</button>
 </div>
 
-<main>
-  <div id="content">⏳ Loading...</div>
-</main>
+<div id="content" class="news-list">Loading...</div>
 
-<footer>© 2025 ETNext — Smart News Platform</footer>
+<footer>© 2025 ETNext — Smart News</footer>
 
 <button class="theme-toggle" id="theme-toggle">🌙</button>
+
+<div id="popup" class="breaking-popup">
+  <div class="title" id="popup-title">Breaking News</div>
+  <div id="popup-text">Loading...</div>
+</div>
+
 <script>
-// =============== CATEGORY LIST ===============
+/* CATEGORIES */
 const categories = [
-  { name: "World", q: "world news" },
-  { name: "India", q: "india news" },
-  { name: "Business", q: "business news" },
-  { name: "Tech", q: "technology news" },
-  { name: "Sports", q: "sports news" },
-  { name: "Entertainment", q: "entertainment news" }
+  { name: "🌍 World", url: "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en" },
+  { name: "📰 India", url: "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:hi" },
+  { name: "💼 Business", url: "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-IN&gl=IN&ceid=IN:en" },
+  { name: "⚙️ Technology", url: "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=en-IN&gl=IN&ceid=IN:en" },
+  { name: "🎬 Entertainment", url: "https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=en-IN&gl=IN&ceid=IN:en" },
+  { name: "🏏 Sports", url: "https://news.google.com/rss/headlines/section/topic/SPORTS?hl=en-IN&gl=IN&ceid=IN:en" }
 ];
 
 const nav = document.getElementById("nav");
-const content = document.getElementById("content");
-const trendingBar = document.getElementById("trending-bar");
-let currentQuery = "world news";
-
-// =============== BUILD NAV BUTTONS ===============
-categories.forEach(cat => {
-  const btn = document.createElement("button");
-  btn.textContent = cat.name;
-  btn.onclick = () => loadNews(cat.q);
-  nav.appendChild(btn);
+categories.forEach((c,i)=>{
+  let b=document.createElement("button");
+  b.textContent=c.name;
+  b.onclick=()=>loadNews(i);
+  if(i===0) b.classList.add("active");
+  nav.appendChild(b);
 });
 
-// =============== FIXED WORKING RSS LOADER ===============
-async function fetchRSS(query) {
-  const url =
-    "https://news.google.com/rss/search?q=" +
-    encodeURIComponent(query) +
-    "&hl=en-IN&gl=IN&ceid=IN:en";
-
-  const proxy = "https://thingproxy.freeboard.io/fetch/";
-  const res = await fetch(proxy + url);
-  const text = await res.text();
-
-  const xml = new DOMParser().parseFromString(text, "text/xml");
-  return Array.from(xml.querySelectorAll("item"));
+/* FETCH RSS (no CORS) */
+async function loadRSS(url){
+  const api="https://api.allorigins.win/get?url="+encodeURIComponent(url);
+  const res=await fetch(api);
+  const data=await res.json();
+  return new DOMParser().parseFromString(data.contents,"text/xml");
 }
 
-// =============== LOAD NEWS ===============
-async function loadNews(q) {
-  currentQuery = q;
-  content.innerHTML = "⏳ Loading...";
+/* LOAD NEWS */
+const content=document.getElementById("content");
+async function loadNews(index){
+  nav.querySelectorAll("button").forEach(b=>b.classList.remove("active"));
+  nav.children[index].classList.add("active");
 
-  try {
-    const items = await fetchRSS(q);
+  content.innerHTML="Loading...";
+  try{
+    const xml=await loadRSS(categories[index].url);
+    const items=xml.querySelectorAll("item");
 
-    const grid = document.createElement("div");
-    grid.className = "news-grid";
+    content.innerHTML="";
+    items.forEach(i=>{
+      let title=i.querySelector("title")?.textContent;
+      let link=i.querySelector("link")?.textContent;
+      let desc=i.querySelector("description")?.textContent.replace(/<[^>]+>/g,"").slice(0,200);
 
-    items.slice(0, 12).forEach(item => {
-      const title = item.querySelector("title")?.textContent || "";
-      const link = item.querySelector("link")?.textContent;
-      const descRaw = item.querySelector("description")?.textContent || "";
-      const desc = descRaw.replace(/<[^>]*>?/gm, "").slice(0, 150);
-
-      const card = document.createElement("div");
-      card.className = "news-card";
-      card.innerHTML = `
-        <h3>${title}</h3>
-        <p>${desc}</p>
-        <a href="${link}" target="_blank" style="color:#d32f2f;">Read More →</a>
-      `;
-
-      grid.appendChild(card);
+      let div=document.createElement("div");
+      div.className="news-item";
+      div.innerHTML=`<h3>${title}</h3><p>${desc}</p><a href="${link}" target="_blank">Read more →</a>`;
+      content.appendChild(div);
     });
 
-    content.innerHTML = "";
-    content.appendChild(grid);
-  } catch (e) {
-    content.innerHTML = "⚠️ Error loading news.";
+  }catch(e){
+    content.innerHTML="⚠️ Error loading news.";
   }
 }
+loadNews(0);
 
-// =============== TRENDING HEADLINES ===============
-async function updateTrending() {
-  try {
-    const items = await fetchRSS("top news india");
-    const headlines = items.slice(0, 10).map(i =>
-      i.querySelector("title")?.textContent
-    );
+/* TRENDING TICKER */
+const ticker=document.getElementById("ticker");
+let lastHeadline="";
+async function updateTrending(){
+  try{
+    const xml=await loadRSS(categories[0].url);
+    let items=[...xml.querySelectorAll("item")].slice(0,10);
+    let titles=items.map(i=>i.querySelector("title").textContent);
+    ticker.textContent="🔥 Trending: "+titles.join(" • ");
 
-    trendingBar.textContent = "🔥 Trending: " + headlines.join(" • ");
-  } catch {
-    trendingBar.textContent = "🔥 Trending: Unable to load.";
+    if(titles[0]!==lastHeadline){
+      showPopup(titles[0]);
+      lastHeadline=titles[0];
+    }
+
+  }catch{
+    ticker.textContent="🔥 Trending: Unable to load.";
   }
 }
+setInterval(updateTrending,120000);
+updateTrending();
 
-// Update trending every 3 minutes
-setInterval(updateTrending, 180000);
+/* POPUP */
+const popup=document.getElementById("popup");
+const popupText=document.getElementById("popup-text");
+function showPopup(text){
+  popupText.textContent=text;
+  popup.classList.add("show");
+  setTimeout(()=>popup.classList.remove("show"),8000);
+}
 
-// =============== AUTO REFRESH NEWS ===============
-setInterval(() => {
-  loadNews(currentQuery);
-}, 300000); // 5 minutes
-
-// =============== SEARCH ===============
-document.getElementById("search-input").addEventListener("keypress", e => {
-  if (e.key === "Enter") {
-    const q = e.target.value.trim();
-    if (q) loadNews(q);
+/* SEARCH */
+document.getElementById("search-input").addEventListener("keypress",(e)=>{
+  if(e.key==="Enter"){
+    let q=e.target.value.trim();
+    if(!q) return;
+    loadNewsFromSearch(q);
   }
 });
+async function loadNewsFromSearch(q){
+  loadNewsURL(`https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-IN&gl=IN&ceid=IN:en`);
+}
+async function loadNewsURL(url){
+  content.innerHTML="Searching...";
+  try{
+    const xml=await loadRSS(url);
+    const items=xml.querySelectorAll("item");
+    content.innerHTML="";
+    items.slice(0,20).forEach(i=>{
+      let title=i.querySelector("title")?.textContent;
+      let link=i.querySelector("link")?.textContent;
+      content.innerHTML+=`<div class="news-item"><h3>${title}</h3><a href="${link}" target="_blank">Read →</a></div>`;
+    });
+  }catch{
+    content.innerHTML="⚠️ Error loading search.";
+  }
+}
 
-// =============== VOICE SEARCH ===============
-if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
-  const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const rec = new Rec();
-  rec.lang = "en-IN";
-
-  document.getElementById("voice-btn").onclick = () => rec.start();
-
-  rec.onresult = e => {
-    const q = e.results[0][0].transcript;
-    document.getElementById("search-input").value = q;
-    loadNews(q);
+/* VOICE SEARCH */
+if("webkitSpeechRecognition" in window){
+  const rec=new webkitSpeechRecognition();
+  rec.lang="en-IN";
+  document.getElementById("voice-btn").onclick=()=>rec.start();
+  rec.onresult=e=>{
+    const q=e.results[0][0].transcript;
+    document.getElementById("search-input").value=q;
+    loadNewsFromSearch(q);
   };
 }
 
-// =============== DARK MODE ===============
-document.getElementById("theme-toggle").onclick = () => {
+/* THEME */
+document.getElementById("theme-toggle").onclick=()=>{
   document.body.classList.toggle("dark");
-  document.getElementById("theme-toggle").textContent =
-    document.body.classList.contains("dark") ? "☀️" : "🌙";
 };
-
-// =============== INITIAL LOAD ===============
-updateTrending();
-loadNews(currentQuery);
 </script>
+
 </body>
 </html>
