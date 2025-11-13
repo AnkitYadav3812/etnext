@@ -3,283 +3,275 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ETNext — Smart News</title>
+<title>ETNext — Smart News & Weather</title>
 
 <link rel="icon" href="etnext-logo.png" type="image/png" />
 
-<!-- Share Preview -->
-<meta property="og:title" content="ETNext — Smart News" />
-<meta property="og:description" content="Latest breaking news powered by AI — Fast, Clean, Real-time." />
+<!-- SHARE PREVIEW -->
+<meta property="og:title" content="ETNext — Smart News & Weather" />
+<meta property="og:description" content="AI-powered breaking news, trending updates & live headlines." />
 <meta property="og:image" content="https://ankityadav3812.github.io/etnext/etnext-logo.png" />
 <meta property="og:url" content="https://ankityadav3812.github.io/etnext/" />
 <meta property="og:type" content="website" />
 
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="ETNext — Smart News" />
-<meta name="twitter:description" content="Latest breaking news powered by AI — Fast, Clean, Real-time." />
-<meta name="twitter:image" content="https://ankityadav3812.github.io/etnext/etnext-logo.png" />
-
 <style>
+:root {
+  --primary:#d32f2f;
+  --foreground:#111;
+  --accent:#f6f6f8;
+}
+.dark {
+  --primary:#ef5350;
+  --foreground:#fff;
+  --accent:#1e1e1e;
+}
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f3f3f3;
+  margin:0;
+  font-family:"Poppins",sans-serif;
+  background:var(--accent);
+  color:var(--foreground);
+  transition:0.3s ease;
 }
 
+/* HEADER */
 header {
-  background: #d32f2f;
-  color: white;
-  padding: 1rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  background:var(--primary);
+  padding:1rem 2rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:20;
 }
-
 header img {
-  height: 45px;
-  border-radius: 6px;
+  height:45px;
+  border-radius:6px;
 }
 
+/* NAVIGATION */
 nav {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.6rem;
 }
-
 nav button {
-  background: rgba(255,255,255,0.2);
-  border: none;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 20px;
-  cursor: pointer;
+  background:rgba(255,255,255,0.1);
+  color:white;
+  border:none;
+  padding:0.45rem 1rem;
+  border-radius:20px;
+  cursor:pointer;
 }
-
 nav button.active,
 nav button:hover {
-  background: #ffffff;
-  color: #d32f2f;
+  background:white;
+  color:var(--primary);
 }
 
-/* Trending Bar */
+/* SEARCH */
+.search-container {
+  max-width:600px;
+  margin:1rem auto;
+  display:flex;
+  gap:0.5rem;
+}
+.search-bar {
+  flex:1;
+  padding:0.75rem 1rem;
+  border-radius:25px;
+  border:1px solid #ccc;
+  font-size:1rem;
+}
+.voice-btn {
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:var(--primary);
+  color:white;
+  border:none;
+  cursor:pointer;
+  font-size:1.3rem;
+}
+
+/* TRENDING BAR */
 #trending-bar {
   background:white;
   padding:10px;
+  font-weight:bold;
+  color:#d32f2f;
   overflow:hidden;
   white-space:nowrap;
   border-bottom:1px solid #ddd;
-  font-weight:bold;
-  color:#d32f2f;
 }
 
-.search-container {
-  max-width: 600px;
-  margin: 1rem auto;
-  display: flex;
-  gap: 10px;
-  padding: 0 10px;
-}
-
-.search-bar {
-  flex: 1;
-  padding: 10px 15px;
-  border-radius: 25px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-}
-
-.voice-btn {
-  width: 45px;
-  height: 45px;
-  background: #d32f2f;
-  color: white;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
-
+/* GRID */
 main {
-  max-width: 1100px;
-  margin: 1rem auto;
-  padding: 0 1rem;
+  max-width:1200px;
+  margin:auto;
+  padding:1rem;
 }
-
-.news-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.news-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1rem;
 }
-
 .news-card {
-  background: white;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background:white;
+  padding:1rem;
+  border-radius:10px;
+  box-shadow:0 2px 5px rgba(0,0,0,0.1);
+  cursor:pointer;
+  transition:0.2s;
 }
+.news-card:hover { transform:translateY(-2px); }
 
 .news-card h3 {
-  margin: 0 0 8px 0;
+  margin:0;
+  font-size:1.1rem;
 }
 
 footer {
-  text-align: center;
-  background: #111;
-  color: #aaa;
-  padding: 1.2rem;
-  margin-top: 2rem;
-  font-size: 0.9rem;
+  background:#111;
+  color:#ccc;
+  text-align:center;
+  padding:2rem;
+  margin-top:2rem;
+}
+
+.theme-toggle {
+  position:fixed;
+  right:1rem;
+  bottom:1rem;
+  background:var(--primary);
+  border:none;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  font-size:1.4rem;
+  color:#fff;
 }
 </style>
-
 </head>
-
 <body>
 
 <header>
-  <img src="etnext-logo.png" alt="ETNext Logo" />
+  <img src="etnext-logo.png" alt="logo">
   <nav id="nav"></nav>
 </header>
 
-<!-- TRENDING BAR -->
 <div id="trending-bar">🔥 Trending: Loading...</div>
 
 <div class="search-container">
-  <input id="search-input" class="search-bar" placeholder="Search news... (e.g. AI, Elections)" />
+  <input id="search-input" class="search-bar" placeholder="Search news...">
   <button id="voice-btn" class="voice-btn">🎤</button>
 </div>
 
 <main>
-  <div id="content">Loading news...</div>
+  <div id="content">⏳ Loading...</div>
 </main>
 
-<footer>© 2025 ETNext — Smart News</footer>
+<footer>© 2025 ETNext — Smart News Platform</footer>
 
+<button class="theme-toggle" id="theme-toggle">🌙</button>
 <script>
-// ================================
-//  NEWS CATEGORIES
-// ================================
+// =============== CATEGORY LIST ===============
 const categories = [
-  { name: "🌍 World", q: "world" },
-  { name: "💼 Business", q: "business" },
-  { name: "⚙️ Tech", q: "technology" },
-  { name: "🏏 Sports", q: "sports" },
-  { name: "🎬 Entertainment", q: "entertainment" }
+  { name: "World", q: "world news" },
+  { name: "India", q: "india news" },
+  { name: "Business", q: "business news" },
+  { name: "Tech", q: "technology news" },
+  { name: "Sports", q: "sports news" },
+  { name: "Entertainment", q: "entertainment news" }
 ];
 
 const nav = document.getElementById("nav");
 const content = document.getElementById("content");
 const trendingBar = document.getElementById("trending-bar");
-let currentQuery = "world";
+let currentQuery = "world news";
 
-// CREATE CATEGORY BUTTONS
-categories.forEach(c => {
+// =============== BUILD NAV BUTTONS ===============
+categories.forEach(cat => {
   const btn = document.createElement("button");
-  btn.textContent = c.name;
-  btn.onclick = () => loadNewsAuto(c.q, btn);
+  btn.textContent = cat.name;
+  btn.onclick = () => loadNews(cat.q);
   nav.appendChild(btn);
 });
 
-// MARK FIRST ACTIVE
-nav.children[0].classList.add("active");
-
-// ================================
-//  FETCH RSS using SAFE PROXY
-// ================================
+// =============== FIXED WORKING RSS LOADER ===============
 async function fetchRSS(query) {
-  const rssURL =
+  const url =
     "https://news.google.com/rss/search?q=" +
     encodeURIComponent(query) +
     "&hl=en-IN&gl=IN&ceid=IN:en";
 
-  const proxyURL =
-    "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(rssURL);
+  const proxy = "https://thingproxy.freeboard.io/fetch/";
+  const res = await fetch(proxy + url);
+  const text = await res.text();
 
-  const response = await fetch(proxyURL);
-  const xmlText = await response.text();
-  const xml = new DOMParser().parseFromString(xmlText, "text/xml");
-
+  const xml = new DOMParser().parseFromString(text, "text/xml");
   return Array.from(xml.querySelectorAll("item"));
 }
 
-// ================================
-//  LOAD NEWS LIST (Text only)
-// ================================
-async function loadNews(query, btn) {
+// =============== LOAD NEWS ===============
+async function loadNews(q) {
+  currentQuery = q;
   content.innerHTML = "⏳ Loading...";
-  currentQuery = query;
-
-  if (btn) {
-    nav.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-  }
 
   try {
-    const items = await fetchRSS(query);
+    const items = await fetchRSS(q);
 
-    const list = document.createElement("div");
-    list.className = "news-list";
+    const grid = document.createElement("div");
+    grid.className = "news-grid";
 
-    items.slice(0, 15).forEach(i => {
-      const title = i.querySelector("title")?.textContent;
-      const link = i.querySelector("link")?.textContent;
-      const desc = i.querySelector("description")?.textContent || "";
-      const cleanDesc = desc.replace(/<[^>]*>?/gm, "").slice(0, 200);
+    items.slice(0, 12).forEach(item => {
+      const title = item.querySelector("title")?.textContent || "";
+      const link = item.querySelector("link")?.textContent;
+      const descRaw = item.querySelector("description")?.textContent || "";
+      const desc = descRaw.replace(/<[^>]*>?/gm, "").slice(0, 150);
 
       const card = document.createElement("div");
       card.className = "news-card";
       card.innerHTML = `
         <h3>${title}</h3>
-        <p>${cleanDesc}</p>
-        <a href="${link}" target="_blank">Read more</a>
+        <p>${desc}</p>
+        <a href="${link}" target="_blank" style="color:#d32f2f;">Read More →</a>
       `;
-      list.appendChild(card);
+
+      grid.appendChild(card);
     });
 
     content.innerHTML = "";
-    content.appendChild(list);
-  } catch (err) {
+    content.appendChild(grid);
+  } catch (e) {
     content.innerHTML = "⚠️ Error loading news.";
   }
 }
 
-// Helper for auto refresh
-function loadNewsAuto(query, btn) {
-  loadNews(query, btn);
-}
-
-// LOAD DEFAULT NEWS
-loadNews("world");
-
-// ================================
-//  TRENDING HEADLINES
-// ================================
+// =============== TRENDING HEADLINES ===============
 async function updateTrending() {
   try {
     const items = await fetchRSS("top news india");
-    const titles = items.slice(0, 10).map(i => i.querySelector("title")?.textContent);
-    trendingBar.textContent = "🔥 Trending: " + titles.join(" • ");
+    const headlines = items.slice(0, 10).map(i =>
+      i.querySelector("title")?.textContent
+    );
+
+    trendingBar.textContent = "🔥 Trending: " + headlines.join(" • ");
   } catch {
     trendingBar.textContent = "🔥 Trending: Unable to load.";
   }
 }
 
-updateTrending();
-setInterval(updateTrending, 180000); // 3 minutes
+// Update trending every 3 minutes
+setInterval(updateTrending, 180000);
 
-// ================================
-//  AUTO REFRESH NEWS
-// ================================
+// =============== AUTO REFRESH NEWS ===============
 setInterval(() => {
   loadNews(currentQuery);
 }, 300000); // 5 minutes
 
-// ================================
-//  SEARCH BAR
-// ================================
+// =============== SEARCH ===============
 document.getElementById("search-input").addEventListener("keypress", e => {
   if (e.key === "Enter") {
     const q = e.target.value.trim();
@@ -287,12 +279,10 @@ document.getElementById("search-input").addEventListener("keypress", e => {
   }
 });
 
-// ================================
-//  VOICE SEARCH
-// ================================
+// =============== VOICE SEARCH ===============
 if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const rec = new SR();
+  const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const rec = new Rec();
   rec.lang = "en-IN";
 
   document.getElementById("voice-btn").onclick = () => rec.start();
@@ -303,7 +293,17 @@ if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
     loadNews(q);
   };
 }
-</script>
 
+// =============== DARK MODE ===============
+document.getElementById("theme-toggle").onclick = () => {
+  document.body.classList.toggle("dark");
+  document.getElementById("theme-toggle").textContent =
+    document.body.classList.contains("dark") ? "☀️" : "🌙";
+};
+
+// =============== INITIAL LOAD ===============
+updateTrending();
+loadNews(currentQuery);
+</script>
 </body>
 </html>
